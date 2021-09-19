@@ -1,7 +1,6 @@
 package epam.project.spring.dto;
 
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.Dish;
 import epam.project.spring.entity.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
