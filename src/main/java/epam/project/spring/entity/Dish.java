@@ -44,15 +44,22 @@ public class Dish implements Serializable, Cloneable {
     @Column(name = "amount")
     private int amount;
 
-    @ManyToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private Set<Order> orders = new HashSet<>();
+//    @ManyToMany(mappedBy = "order", fetch = FetchType.LAZY)
+//    private Set<Order> orders = new HashSet<>();
 
-    public Dish(String dishName, int price, String category, int amount, Set<Order> orders) {
+//    public Dish(String dishName, int price, String category, int amount, Set<Order> orders) {
+//        this.dishName = dishName;
+//        this.price = price;
+//        this.category = category;
+//        this.amount = amount;
+//        this.orders = orders;
+//    }
+
+    public Dish(String dishName, int price, String category, int amount) {
         this.dishName = dishName;
         this.price = price;
         this.category = category;
         this.amount = amount;
-        this.orders = orders;
     }
 
     public static Dish of(Long id, String dishName, int price, String category, int amount) {

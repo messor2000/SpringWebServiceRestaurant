@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -44,6 +47,9 @@ public class AppUser implements Serializable, Cloneable {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }
 
     public static AppUser of(Long id, String login, String password, UserRole role) {

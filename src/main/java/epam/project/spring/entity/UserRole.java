@@ -14,8 +14,8 @@ import java.io.Serializable;
 /**
  * @author Aleksandr Ovcharenko
  */
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 @Table(name = "user_role")
 public class UserRole implements Serializable, Cloneable {
