@@ -7,8 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -27,9 +30,12 @@ public class OrderStatus implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-
     @Column(name = "status")
     private String status;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @Override public Object clone() throws CloneNotSupportedException {
         return super.clone();

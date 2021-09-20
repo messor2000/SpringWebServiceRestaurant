@@ -41,11 +41,10 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "status", nullable = false)
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private OrderStatus status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
