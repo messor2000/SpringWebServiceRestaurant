@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/admin/*")
                         .hasRole("ADMIN")
                     .antMatchers("/user/*", "/client/*")
-                    .hasAnyRole("ADMIN", "USER")
+                        .hasAnyRole("ADMIN", "USER")
                     .and()
                 .exceptionHandling()
                     .accessDeniedPage("/")
@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true);
 
     }
+
 
     @Override
     @Bean
