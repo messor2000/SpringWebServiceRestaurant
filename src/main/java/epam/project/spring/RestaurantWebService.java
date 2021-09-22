@@ -3,15 +3,22 @@ package epam.project.spring;
 import epam.project.spring.filter.XSSFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class RestaurantWebService {
+public class RestaurantWebService extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(RestaurantWebService.class, args);
     }
+
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(RestaurantWebService.class);
+//    }
 
     @Bean
     public FilterRegistrationBean<XSSFilter> xssPreventFilter() {

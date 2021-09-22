@@ -24,6 +24,7 @@ import javax.validation.Valid;
 
 import static epam.project.spring.util.Constants.PARAM_LOGIN;
 import static epam.project.spring.util.Constants.PARAM_USER;
+import static epam.project.spring.util.Page.INDEX_PAGE;
 import static epam.project.spring.util.Page.REGISTRATION_PAGE;
 
 /**
@@ -48,12 +49,15 @@ public class SignController {
 
     @GetMapping(value = "/up")
     public String getSignPage() {
-        return REGISTRATION_PAGE;
+        return INDEX_PAGE;
     }
 
     @PostMapping(value = "/up")
     public String signUp(HttpServletRequest request, HttpSession session, @Valid AppUserDto user, Model model) {
-        user.setRole(userRoleService.findUserRoleByName("USER").get());
+
+        if (userRoleService.findUserRoleByName("USER").isPresent()) {
+            user.setRole(userRoleService.findUserRoleByName("USER").get());
+        }
 
         String password = user.getPassword();
         String passHash = passwordEncoder.encode(user.getPassword());

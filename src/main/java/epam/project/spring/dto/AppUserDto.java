@@ -19,7 +19,7 @@ public class AppUserDto implements Serializable {
 
     private Long id;
 
-    @NotBlank
+//    @NotBlank
     private String username;
 
     @NotBlank

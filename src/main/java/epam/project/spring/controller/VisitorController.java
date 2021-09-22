@@ -1,12 +1,8 @@
 package epam.project.spring.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import static epam.project.spring.util.Page.*;
 
@@ -17,22 +13,30 @@ import static epam.project.spring.util.Page.*;
 public class VisitorController {
 
     @RequestMapping(value = "/")
-    public String index(HttpSession session, Model model, HttpServletRequest request) {
+    public String index() {
         return INDEX_PAGE;
     }
 
+    @RequestMapping(value = "/menu")
+    public String menu() {
+        return MENU_PAGE;
+    }
+
+
+
+
     @GetMapping(value = "/info/about")
-    public String about(HttpSession session, Model model) {
+    public String about() {
         return ABOUT_PAGE;
     }
 
     @GetMapping(value = "/info/recipes")
-    public String recipes(HttpSession session, Model model) {
+    public String recipes() {
         return RECIPES_PAGE;
     }
 
     @GetMapping(value = "/info/contact")
-    public String contact(HttpSession session, Model model) {
+    public String contact() {
         return CONTACT_PAGE;
     }
 }
