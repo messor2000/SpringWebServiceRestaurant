@@ -33,7 +33,7 @@
         </div>
 
         <div class="modal-footer">
-            <a href="index.jsp">
+            <a href="<c:url value="/"/>">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="locale.return">Return</fmt:message></button>
             </a>
         </div>

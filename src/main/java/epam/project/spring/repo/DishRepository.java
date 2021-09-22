@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,6 +14,9 @@ import java.util.Optional;
  */
 @Repository
 public interface DishRepository extends JpaRepository<Dish, Long> {
+//    @Query("select d from Dish d where d.dishName = :dishName")
+//    Optional<Dish> findByName(@Param("dishName") String dishName);
+
     @Query("select d from Dish d where d.dishName = :dishName")
-    Optional<Dish> findByName(@Param("dishName") String dishName);
+    List<Dish> findByName(@Param("dishName") String dishName);
 }

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -36,11 +37,14 @@ public class AppUser implements Serializable, Cloneable {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserRole role;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserRole> role;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Purse purse;
@@ -48,16 +52,16 @@ public class AppUser implements Serializable, Cloneable {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Order order;
 
-    public AppUser(String username, String password, UserRole role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+//    public AppUser(String username, String password, Set<UserRole> role) {
+//        this.username = username;
+//        this.password = password;
+//        this.role = role;
+//    }
 
     public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }
 
-    public static AppUser of(Long id, String login, String password, UserRole role) {
+    public static AppUser of(Long id, String login, String password, Set<UserRole> role) {
         return AppUser.builder()
                 .id(id)
                 .username(login)
@@ -71,7 +75,7 @@ public class AppUser implements Serializable, Cloneable {
     }
 
     public AppUserDto toDto() {
-        return AppUserDto.of(id, username, null, role);
+        return AppUserDto.of(id, username, null, email, role);
     }
 
     @Override

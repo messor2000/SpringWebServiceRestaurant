@@ -31,10 +31,20 @@ public class MenuServiceImpl implements MenuService {
         return dishRepository.findById(id);
     }
 
+//    @Override
+//    @Transactional
+//    public Optional<Dish> findDishByName(String name) {
+//        return dishRepository.findByName(name);
+//    }
+
     @Override
     @Transactional
-    public Optional<Dish> findDishByName(String name) {
-        return dishRepository.findByName(name);
+    public List<DishDto> findDishByName(String name) {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = dishRepository.findByName(name);
+
+        dishes.forEach(x -> menu.add(x.toDto()));
+        return menu;
     }
 
     @Override

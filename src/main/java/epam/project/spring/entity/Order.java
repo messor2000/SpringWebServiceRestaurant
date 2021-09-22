@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,6 +26,7 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,8 +44,8 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private OrderStatus status;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<OrderStatus> status;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -66,7 +69,7 @@ public class Order implements Serializable, Cloneable {
                             nullable = false, updatable = false)})
     private Set<Dish> dishes = new HashSet<>();
 
-    public Order(OrderStatus status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
+    public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
         this.status = status;
         this.user = user;
         this.creationDate = creationDate;
@@ -74,7 +77,7 @@ public class Order implements Serializable, Cloneable {
         this.dishes = dishes;
     }
 
-    public static Order of(Long id, OrderStatus status, AppUser user, Date creationDate, Date updateDate)  {
+    public static Order of(Long id, Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate)  {
         return Order.builder()
                 .id(id)
                 .status(status)

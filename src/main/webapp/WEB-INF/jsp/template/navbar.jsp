@@ -5,7 +5,7 @@
   Time: 18:47
   To change this template use File | Settings | File Templates.
 --%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,8 +23,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li id="index-page"><a href="${pageContext.request.contextPath}/"><fmt:message key="locale.home">Home</fmt:message></a></li>
-                <li id="menu"><a href="FrontController?command=show-menu"><fmt:message key="locale.menu">Menu</fmt:message></a></li>
+                <li id="index-page"><a href="${pageContext.request.contextPath}/"><fmt:message
+                        key="locale.home">Home</fmt:message></a></li>
+                <li id="menu"><a href="${pageContext.request.contextPath}/menu"><fmt:message
+                        key="locale.menu">Menu</fmt:message></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${sessionScope.get('user') == null}">
@@ -44,7 +46,8 @@
                             <span class="glyphicon glyphicon-user"></span>${sessionScope.get('user').username}</a>
                     </li>
                     <li><a href="FrontController?command=log-out">
-                        <span class="glyphicon glyphicon-log-out"></span><fmt:message key="locale.logOut">Logout</fmt:message></a>
+                        <span class="glyphicon glyphicon-log-out"></span><fmt:message
+                            key="locale.logOut">Logout</fmt:message></a>
                     </li>
                 </c:if>
                 <li><a href="?lang=en_US">English</a></li>
@@ -63,34 +66,41 @@
             </div>
             <div class="modal-body text-center">
 
-                <form name="loginForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/sign/up" onsubmit="return validateForm();">
+                <form name="loginForm" class="form-horizontal" method="post"
+                      action="<c:url value="/sign/up"/>" onsubmit="return validateForm();">
                     <input type="hidden" name="command" value="login"/>
                     <span id="usernameDemo" class="red"></span>
                     <div class="form-group">
-                        <label for="username" class="col-sm-3 control-label"><fmt:message key="locale.username">Username</fmt:message></label>
+                        <label for="username" class="col-sm-3 control-label"><fmt:message
+                                key="locale.username">Username</fmt:message></label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="username" placeholder="<fmt:message key="locale.username">Username</fmt:message>"
+                            <input type="text" class="form-control" id="username"
+                                   placeholder="<fmt:message key="locale.username">Username</fmt:message>"
                                    name="username" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password3" class="col-sm-3 control-label"><fmt:message key="locale.password">Password</fmt:message></label>
+                        <label for="password3" class="col-sm-3 control-label"><fmt:message
+                                key="locale.password">Password</fmt:message></label>
                         <span id="passwordDemo" class="red"></span>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="password3" placeholder="<fmt:message key="locale.password">Password</fmt:message>"
+                            <input type="password" class="form-control" id="password3"
+                                   placeholder="<fmt:message key="locale.password">Password</fmt:message>"
                                    name="password" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-7">
-                            <button type="submit" class="btn btn-primary"><fmt:message key="locale.signIn">Sing in</fmt:message></a></button>
+                            <button type="submit" class="btn btn-primary"><fmt:message
+                                    key="locale.signIn">Sing in</fmt:message></button>
                         </div>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="locale.cancel">Cancel</fmt:message></a></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message
+                        key="locale.cancel">Cancel</fmt:message></button>
             </div>
         </div>
     </div>
@@ -142,58 +152,101 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                <h4 class="modal-title" id="myModalLabel"><fmt:message key="locale.registerName">Register to Restaurant</fmt:message></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><fmt:message
+                        key="locale.registerName">Register to Restaurant</fmt:message></h4>
             </div>
             <div class="modal-body text-center">
-                <form name="registerForm" class="form-horizontal" method="post" action="FrontController"  onsubmit="return validateRegistration();">
+                <form name="registerForm" class="form-horizontal" method="post" action="FrontController"
+                      onsubmit="return validateRegistration();">
                     <input type="hidden" name="command" value="register"/>
                     <div class="form-group">
-                        <label for="inputUsername" class="col-sm-3 control-label"><fmt:message key="locale.username">Username</fmt:message></label>
+                        <label for="inputUsername" class="col-sm-3 control-label"><fmt:message
+                                key="locale.username">Username</fmt:message></label>
                         <span id="usernameDemo2" class="red"></span>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="inputUsername" placeholder="<fmt:message key="locale.username">Username</fmt:message>"
+                            <input type="text" class="form-control" id="inputUsername"
+                                   placeholder="<fmt:message key="locale.username">Username</fmt:message>"
                                    name="username" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="col-sm-3 control-label"><fmt:message key="locale.email">Email</fmt:message></label>
+                        <label for="email" class="col-sm-3 control-label"><fmt:message
+                                key="locale.email">Email</fmt:message></label>
                         <span id="emailDemo2" class="red"></span>
                         <div class="col-sm-7">
-                            <input type="email" class="form-control" id="email" placeholder="<fmt:message key="locale.email">Email</fmt:message>"
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="<fmt:message key="locale.email">Email</fmt:message>"
                                    name="email" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-3 control-label"><fmt:message key="locale.password">Password</fmt:message></label>
+                        <label for="inputPassword3" class="col-sm-3 control-label"><fmt:message
+                                key="locale.password">Password</fmt:message></label>
                         <span id="passwordDemo2" class="red"></span>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="<fmt:message key="locale.password">Password</fmt:message>"
+                            <input type="password" class="form-control" id="inputPassword3"
+                                   placeholder="<fmt:message key="locale.password">Password</fmt:message>"
                                    name="password" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword4" class="col-sm-3 control-label"><fmt:message key="locale.repeatPassword">Repeat password</fmt:message></label>
+                        <label for="inputPassword4" class="col-sm-3 control-label"><fmt:message
+                                key="locale.repeatPassword">Repeat password</fmt:message></label>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="<fmt:message key="locale.password">Repeat password</fmt:message>"
+                            <input type="password" class="form-control" id="inputPassword4"
+                                   placeholder="<fmt:message key="locale.password">Repeat password</fmt:message>"
                                    name="password2" required>
                         </div>
                     </div>
+                    <input type="hidden" name="role" value="VISITOR">
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-7">
-                            <button type="submit" class="btn btn-primary"><fmt:message key="locale.register">Register</fmt:message></button>
+                            <button type="submit" class="btn btn-primary"><fmt:message
+                                    key="locale.register">Register</fmt:message></button>
                         </div>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="locale.cancel">Cancel</fmt:message></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message
+                        key="locale.cancel">Cancel</fmt:message></button>
             </div>
+
+<%--            <form method="post" action="${pageContext.request.contextPath}/signup" role="form" class="form-horizontal">--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="InputEmail" class="control-label"><fmt:message key="form.email"/></label>--%>
+<%--                    <input type="email" name="email" class="form-control" id="InputEmail"--%>
+<%--                           placeholder="<fmt:message key="placeholder.email"/>">--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="InputPassword" class="control-label"><fmt:message key="form.password"/></label>--%>
+<%--                    <input type="password" name="password" class="form-control" id="InputPassword"--%>
+<%--                           placeholder="<fmt:message key="placeholder.password"/>">--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="InputFirstName" class="control-label"><fmt:message key="form.firstName"/></label>--%>
+<%--                    <input type="text" name="first-name" class="form-control" id="InputFirstName"--%>
+<%--                           placeholder="<fmt:message key="placeholder.firstName"/>">--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="InputLastName" class="control-label"><fmt:message key="form.lastName"/></label>--%>
+<%--                    <input type="text" name="last-name" class="form-control" id="InputLastName"--%>
+<%--                           placeholder="<fmt:message key="placeholder.lastName"/>">--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="InputPhone" class="control-label"><fmt:message key="form.phone"/></label>--%>
+<%--                    <input type="text" name="phone" class="form-control" id="InputPhone"--%>
+<%--                           placeholder="<fmt:message key="placeholder.phone"/>">--%>
+<%--                </div>--%>
+<%--                <input type="hidden" name="role" value="VISITOR">--%>
+<%--                <button type="submit" class="btn btn-primary"><fmt:message key="ref.submit"/></button>--%>
+<%--            </form>--%>
         </div>
     </div>
 </div>
-<script  language="javascript">
+<script language="javascript">
     function validateRegistration() {
         let username, email, password, password2;
         let usernameText, emailText, passwordText;

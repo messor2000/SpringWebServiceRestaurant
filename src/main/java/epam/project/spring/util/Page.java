@@ -18,6 +18,7 @@ public class Page {
 
     public static final String INDEX_PAGE = "index";
     public static final String MENU_PAGE = "menu";
+    public static final String SIGN_UP_PAGE = "signup";
 
     private Page(){}
 }

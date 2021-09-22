@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,9 +56,7 @@ public class SignController {
     @PostMapping(value = "/up")
     public String signUp(HttpServletRequest request, HttpSession session, @Valid AppUserDto user, Model model) {
 
-        if (userRoleService.findUserRoleByName("USER").isPresent()) {
-            user.setRole(userRoleService.findUserRoleByName("USER").get());
-        }
+        user.setRole(userRoleService.findUserRoleByName("USER").get());
 
         String password = user.getPassword();
         String passHash = passwordEncoder.encode(user.getPassword());
@@ -72,6 +71,9 @@ public class SignController {
         session.setAttribute(PARAM_USER, user);
         logger.info("create user with id = " + user.getId());
         return "redirect:/";
+
+//        return new RedirectView("/");
+
     }
 
     public void authWithAuthManager(HttpServletRequest request, String username, String password) {

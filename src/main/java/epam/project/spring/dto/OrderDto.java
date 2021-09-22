@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -18,7 +20,7 @@ public class OrderDto {
 
     private Long id;
 
-    private OrderStatus status;
+    private Set<OrderStatus> status;
 
     private AppUser user;
 
@@ -26,7 +28,7 @@ public class OrderDto {
 
     private Date updateDate;
 
-    public static OrderDto of(Long id, OrderStatus status, AppUser user, Date creationDate, Date updateDate) {
+    public static OrderDto of(Long id, Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate) {
         return new OrderDto(id, status, user, creationDate, updateDate);
     }
 }

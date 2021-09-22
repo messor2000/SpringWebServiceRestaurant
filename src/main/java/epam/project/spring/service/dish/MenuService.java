@@ -18,8 +18,11 @@ public interface MenuService {
     @Transactional
     Optional<Dish> findDishById(Long id);
 
+//    @Transactional
+//    Optional<Dish> findDishByName(String name);
+
     @Transactional
-    Optional<Dish> findDishByName(String name);
+    List<DishDto> findDishByName(String name);
 
     @Transactional
     List<DishDto> showAllMenu();

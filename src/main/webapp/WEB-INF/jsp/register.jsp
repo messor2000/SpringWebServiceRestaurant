@@ -25,10 +25,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+    <link rel="shortcut icon" href="../../static/image/logo.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/first.css">
+    <link rel="stylesheet" href="../../static/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../static/js/jssor.slider.mini.js"></script>
 </head>
 <body onload="active()">
 
@@ -52,8 +54,9 @@
                         <c:remove var="errorMessage" scope="request"/>
                     </c:if>
                     <div class="modal-body text-center">
-                        <form name="registerForm" class="form-horizontal" method="post" action="FrontController" onsubmit="return validateForm();">
-                            <input type="hidden" name="command" value="register"/>
+<%--                        <form method="post" action="${pageContext.request.contextPath}/signup" role="form" class="form-horizontal">--%>
+                        <form name="registerForm" class="form-horizontal" method="post" action="<c:url value="/signup"/>" onsubmit="return validateForm();">
+<%--                            <input type="hidden" name="command" value="register"/>--%>
                             <div class="form-group">
                                 <label for="inputUsername" class="col-sm-3 control-label">${username}</label>
                                 <span id="unameDemo" class="red"></span>

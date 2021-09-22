@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean createUser(AppUserDto user) {
-
         if (userRepository.existsByLogin(user.getUsername())) {
             return false;
         }

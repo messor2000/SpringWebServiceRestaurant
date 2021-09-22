@@ -9,7 +9,7 @@ public class Constants {
     public static final String PARAM_ACTIVITY = "activity";
     public static final String PARAM_NUTRITION_GOAL = "nutr_goal";
     public static final String PARAM_PUBLIC = "public";
-    public static final String PARAM_LOGIN = "login";
+    public static final String PARAM_LOGIN = "username";
     public static final String PARAM_USER = "user";
     public static final String PARAM_WEEK_INFO = "weekInfo";
     public static final String PARAM_FOOD = "food";
