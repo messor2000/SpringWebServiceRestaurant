@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -43,8 +44,8 @@ public class AppUser implements Serializable, Cloneable {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserRole> role;
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserRole> roles;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Purse purse;
@@ -61,12 +62,12 @@ public class AppUser implements Serializable, Cloneable {
     public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }
 
-    public static AppUser of(Long id, String login, String password, Set<UserRole> role) {
+    public static AppUser of(Long id, String login, String password, Set<UserRole> roles) {
         return AppUser.builder()
                 .id(id)
                 .username(login)
                 .password(password)
-                .role(role)
+                .roles(roles)
                 .build();
     }
 
@@ -75,7 +76,7 @@ public class AppUser implements Serializable, Cloneable {
     }
 
     public AppUserDto toDto() {
-        return AppUserDto.of(id, username, null, email, role);
+        return AppUserDto.of(id, username, null, email, roles);
     }
 
     @Override
