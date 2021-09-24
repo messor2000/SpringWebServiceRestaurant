@@ -1,6 +1,7 @@
 package epam.project.spring.controller;
 
 import epam.project.spring.dto.AppUserDto;
+import epam.project.spring.entity.Role;
 import epam.project.spring.service.user.UserService;
 import epam.project.spring.service.user_role.UserRoleService;
 import org.apache.logging.log4j.LogManager;
@@ -50,13 +51,15 @@ public class SignController {
 
     @GetMapping(value = "/up")
     public String getSignPage() {
-        return INDEX_PAGE;
+        return REGISTRATION_PAGE;
     }
 
     @PostMapping(value = "/up")
     public String signUp(HttpServletRequest request, HttpSession session, @Valid AppUserDto user, Model model) {
 
-        user.setRole(userRoleService.findUserRoleByName("USER").get());
+//        user.setRole(Role.USER);
+
+        user.setRole("USER");
 
         String password = user.getPassword();
         String passHash = passwordEncoder.encode(user.getPassword());
@@ -65,7 +68,7 @@ public class SignController {
         if (!userService.createUser(user)) {
             model.addAttribute("error_user", true);
             model.addAttribute(PARAM_LOGIN, user.getUsername());
-            return "redirect:/sign/up?error_create";
+            return "redirect:/error";
         }
         authWithAuthManager(request, user.getUsername(), password);
         session.setAttribute(PARAM_USER, user);

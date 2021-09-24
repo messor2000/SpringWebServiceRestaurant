@@ -45,7 +45,7 @@
                         <a href="FrontController?command=view-user&username=${sessionScope.get('user').username}">
                             <span class="glyphicon glyphicon-user"></span>${sessionScope.get('user').username}</a>
                     </li>
-                    <li><a href="FrontController?command=log-out">
+                    <li><a href="${pageContext.request.contextPath}/sign/out">
                         <span class="glyphicon glyphicon-log-out"></span><fmt:message
                             key="locale.logOut">Logout</fmt:message></a>
                     </li>
@@ -67,8 +67,8 @@
             <div class="modal-body text-center">
 
                 <form name="loginForm" class="form-horizontal" method="post"
-                      action="<c:url value="/sign/up"/>" onsubmit="return validateForm();">
-                    <input type="hidden" name="command" value="login"/>
+                      action="<c:url value="/"/>" onsubmit="return validateForm();">
+<%--                    <input type="hidden" name="command" value="login"/>--%>
                     <span id="usernameDemo" class="red"></span>
                     <div class="form-group">
                         <label for="username" class="col-sm-3 control-label"><fmt:message
@@ -157,9 +157,9 @@
                         key="locale.registerName">Register to Restaurant</fmt:message></h4>
             </div>
             <div class="modal-body text-center">
-                <form name="registerForm" class="form-horizontal" method="post" action="FrontController"
+                <form name="registerForm" class="form-horizontal" method="post" action="<c:url value="/sign/up"/>"
                       onsubmit="return validateRegistration();">
-                    <input type="hidden" name="command" value="register"/>
+<%--                    <input type="hidden" name="command" value="register"/>--%>
                     <div class="form-group">
                         <label for="inputUsername" class="col-sm-3 control-label"><fmt:message
                                 key="locale.username">Username</fmt:message></label>

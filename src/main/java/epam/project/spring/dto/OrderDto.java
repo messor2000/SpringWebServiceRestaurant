@@ -22,13 +22,13 @@ public class OrderDto {
 
     private Set<OrderStatus> status;
 
-    private AppUser user;
+//    private AppUser user;
 
     private Date creationDate;
 
     private Date updateDate;
 
-    public static OrderDto of(Long id, Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate) {
-        return new OrderDto(id, status, user, creationDate, updateDate);
+    public static OrderDto of(Long id, Set<OrderStatus> status, Date creationDate, Date updateDate) {
+        return new OrderDto(id, status, creationDate, updateDate);
     }
 }

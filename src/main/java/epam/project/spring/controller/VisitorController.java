@@ -44,19 +44,47 @@ public class VisitorController {
         return MENU_PAGE;
     }
 
+    @RequestMapping(value = "/menu/fromHighToLow")
+    public String menuFormHighToLow(HttpServletRequest request, Model model) {
+        List<DishDto> dish = menuService.showAllMenuFromHighPriceToLow();
 
-    @GetMapping(value = "/info/about")
-    public String about() {
-        return ABOUT_PAGE;
+        model.addAttribute("dish", dish);
+        return MENU_PAGE;
     }
 
-    @GetMapping(value = "/info/recipes")
-    public String recipes() {
-        return RECIPES_PAGE;
+    @RequestMapping(value = "/menu/fromLowToHigh")
+    public String menuFormLowToHigh(HttpServletRequest request, Model model) {
+        List<DishDto> dish = menuService.showAllMenuFromLowPriceToHigh();
+
+        model.addAttribute("dish", dish);
+        return MENU_PAGE;
     }
 
-    @GetMapping(value = "/info/contact")
-    public String contact() {
-        return CONTACT_PAGE;
+    @RequestMapping(value = "/menu/fastFood")
+    public String dishesByCategoryFastFood(HttpServletRequest request, Model model) {
+        String category = "Fast food";
+        List<DishDto> dish = menuService.showDishesByCategory(category);
+
+        model.addAttribute("dish", dish);
+        return MENU_PAGE;
     }
+
+    @RequestMapping(value = "/menu/healthyFood")
+    public String dishesByCategoryHealthyFood(HttpServletRequest request, Model model) {
+        String category = "Healthy food";
+        List<DishDto> dish = menuService.showDishesByCategory(category);
+
+        model.addAttribute("dish", dish);
+        return MENU_PAGE;
+    }
+
+    @RequestMapping(value = "/menu/desert")
+    public String dishesByCategoryDesert(HttpServletRequest request, Model model) {
+        String category = "Desert";
+        List<DishDto> dish = menuService.showDishesByCategory(category);
+
+        model.addAttribute("dish", dish);
+        return MENU_PAGE;
+    }
+
 }

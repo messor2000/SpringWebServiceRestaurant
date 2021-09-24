@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -31,7 +32,7 @@ import java.util.Set;
 @Table(name = "app_user")
 public class AppUser implements Serializable, Cloneable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
@@ -44,14 +45,17 @@ public class AppUser implements Serializable, Cloneable {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserRole> roles;
+    @Column(name = "user_role")
+    private String role;
+
+//    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Set<UserRole> roles;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Purse purse;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Order order;
+//    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Order order;
 
 //    public AppUser(String username, String password, Set<UserRole> role) {
 //        this.username = username;
@@ -62,12 +66,12 @@ public class AppUser implements Serializable, Cloneable {
     public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }
 
-    public static AppUser of(Long id, String login, String password, Set<UserRole> roles) {
+    public static AppUser of(Long id, String login, String password, String role) {
         return AppUser.builder()
                 .id(id)
                 .username(login)
                 .password(password)
-                .roles(roles)
+                .role(role)
                 .build();
     }
 
@@ -76,7 +80,7 @@ public class AppUser implements Serializable, Cloneable {
     }
 
     public AppUserDto toDto() {
-        return AppUserDto.of(id, username, null, email, roles);
+        return AppUserDto.of(id, username, null, email, role);
     }
 
     @Override

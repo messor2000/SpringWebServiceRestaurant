@@ -56,4 +56,33 @@ public class MenuServiceImpl implements MenuService {
         dishes.forEach(x -> menu.add(x.toDto()));
         return menu;
     }
+
+    @Override
+    @Transactional
+    public List<DishDto> showAllMenuFromLowPriceToHigh() {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = dishRepository.findByOrderByPriceAsc();
+
+        dishes.forEach(x -> menu.add(x.toDto()));
+        return menu;
+    }
+
+    @Override
+    @Transactional
+    public List<DishDto> showAllMenuFromHighPriceToLow() {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = dishRepository.findByOrderByPriceDesc();
+
+        dishes.forEach(x -> menu.add(x.toDto()));
+        return menu;
+    }
+
+    @Override
+    public List<DishDto> showDishesByCategory(String category) {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = dishRepository.findAllByCategoryContains(category);
+
+        dishes.forEach(x -> menu.add(x.toDto()));
+        return menu;
+    }
 }

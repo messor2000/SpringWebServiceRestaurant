@@ -74,7 +74,7 @@
                         <%--                            </div>--%>
                         <%--                        </form>--%>
                         <form name="loginForm" class="form-horizontal" method="post"
-                              action="<c:url value="/sign/up"/>" onsubmit="return validateForm();">
+                              action="<c:url value="/sign/in"/>" onsubmit="return validateForm();">
                             <input type="hidden" name="command" value="login"/>
                             <span id="usernameDemo" class="red"></span>
                             <div class="form-group">

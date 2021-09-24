@@ -19,4 +19,17 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
 
     @Query("select d from Dish d where d.dishName = :dishName")
     List<Dish> findByName(@Param("dishName") String dishName);
+
+//    Query("select d from Dish d where d.dishName = :dishName")
+    List<Dish> findAllByCategoryContains(String category);
+
+//    Query("select d from Dish d where d.dishName = :dishName")
+//    List<Dish> findByName(@Param("dishName") String dishName);
+//
+//    Query("select d from Dish d where d.dishName = :dishName")
+//    List<Dish> findByName(@Param("dishName") String dishName);
+
+    List<Dish> findByOrderByPriceAsc();
+
+    List<Dish> findByOrderByPriceDesc();
 }

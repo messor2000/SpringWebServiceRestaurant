@@ -10,7 +10,6 @@ public class Page {
     public static final String CL_EDIT_PAGE = "client_edit";
     public static final String CONTACT_PAGE = "contact";
     public static final String ERROR_PAGE = "error";
-    public static final String REGISTRATION_PAGE = "first_registration";
     public static final String MEALS_PAGE = "meals";
     public static final String PROGRESS_PAGE = "progress";
     public static final String RECIPES_PAGE = "Recipes";
@@ -18,6 +17,7 @@ public class Page {
 
     public static final String INDEX_PAGE = "index";
     public static final String MENU_PAGE = "menu";
+    public static final String REGISTRATION_PAGE = "register";
     public static final String SIGN_UP_PAGE = "signup";
 
     private Page(){}

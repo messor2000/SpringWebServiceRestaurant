@@ -64,24 +64,45 @@
                     <span><fmt:message key="locale.byPrice">By Price</fmt:message></span>
                     <label>
                         <select class="sortStat" onchange="MakeSort(this);">
-                            <option value="FrontController?command=show-menu">-</option>
-                            <option value="FrontController?command=show-menu-by-low-price"><fmt:message
-                                    key="locale.lowPrice">Low price</fmt:message></option>
-                            <option value="FrontController?command=show-menu-by-high-price"><fmt:message
+                            <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>
+
+                            <option value="/menu/fromHighToLow"><fmt:message
                                     key="locale.highPrice">High price</fmt:message></option>
+
+                            <option value="/menu/fromLowToHigh"><fmt:message
+                                    key="locale.lowPrice">Low price</fmt:message></option>
                         </select>
                     </label>
                     <br>
                     <span><fmt:message key="locale.byCategory">By Category</fmt:message></span>
                     <label>
                         <select class="sortStat" name="y" onchange="MakeSort(this);">
-                            <option value="Controller?command=all-movies">-</option>
-                            <option value="FrontController?command=show-menu-by-category&category=fast food">
-                                <fmt:message key="locale.fastFood">Fast food</fmt:message></option>
-                            <option value="FrontController?command=show-menu-by-category&category=healthy food">
-                                <fmt:message key="locale.healthyFood">Healthy food</fmt:message></option>
-                            <option value="FrontController?command=show-menu-by-category&category=desert"><fmt:message
+                            <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>
+
+<%--                            <option href="/menu/fastFood"><fmt:message key="locale.fastFood">fastFood</fmt:message></option>--%>
+
+<%--                            <option href="/menu/healthyFood"><fmt:message key="locale.healthyFood">healthyFood</fmt:message></option>--%>
+
+<%--                            <option href="/menu/desert"><fmt:message key="locale.desert">desert</fmt:message></option>--%>
+
+<%--                            <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>--%>
+
+                            <option value="/menu/fastFood"><fmt:message
+                                    key="locale.fastFood">Fast food</fmt:message></option>
+
+                            <option value="/menu/healthyFood"><fmt:message
+                                    key="locale.healthyFood">Healthy food</fmt:message></option>
+
+                            <option value="/menu/desert"><fmt:message
                                     key="locale.desert">Desert</fmt:message></option>
+
+
+<%--                            <option value="FrontController?command=show-menu-by-category&category=fast food">--%>
+<%--                                <fmt:message key="locale.fastFood">Fast food</fmt:message></option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-category&category=healthy food">--%>
+<%--                                <fmt:message key="locale.healthyFood">Healthy food</fmt:message></option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-category&category=desert"><fmt:message--%>
+<%--                                    key="locale.desert">Desert</fmt:message></option>--%>
                         </select>
                     </label>
                     <br>

@@ -26,4 +26,13 @@ public interface MenuService {
 
     @Transactional
     List<DishDto> showAllMenu();
+
+    @Transactional
+    List<DishDto> showAllMenuFromLowPriceToHigh();
+
+    @Transactional
+    List<DishDto> showAllMenuFromHighPriceToLow();
+
+    @Transactional
+    List<DishDto> showDishesByCategory(String category);
 }
