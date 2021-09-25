@@ -45,7 +45,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/menu/fromHighToLow")
-    public String menuFormHighToLow(HttpServletRequest request, Model model) {
+    public String menuFormHighToLow(Model model) {
         List<DishDto> dish = menuService.showAllMenuFromHighPriceToLow();
 
         model.addAttribute("dish", dish);
@@ -53,7 +53,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/menu/fromLowToHigh")
-    public String menuFormLowToHigh(HttpServletRequest request, Model model) {
+    public String menuFormLowToHigh(Model model) {
         List<DishDto> dish = menuService.showAllMenuFromLowPriceToHigh();
 
         model.addAttribute("dish", dish);
@@ -61,7 +61,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/menu/fastFood")
-    public String dishesByCategoryFastFood(HttpServletRequest request, Model model) {
+    public String dishesByCategoryFastFood(Model model) {
         String category = "Fast food";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
@@ -70,7 +70,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/menu/healthyFood")
-    public String dishesByCategoryHealthyFood(HttpServletRequest request, Model model) {
+    public String dishesByCategoryHealthyFood(Model model) {
         String category = "Healthy food";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
@@ -79,7 +79,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/menu/desert")
-    public String dishesByCategoryDesert(HttpServletRequest request, Model model) {
+    public String dishesByCategoryDesert(Model model) {
         String category = "Desert";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 

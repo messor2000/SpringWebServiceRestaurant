@@ -14,22 +14,16 @@ import java.util.Optional;
  */
 @Repository
 public interface DishRepository extends JpaRepository<Dish, Long> {
-//    @Query("select d from Dish d where d.dishName = :dishName")
-//    Optional<Dish> findByName(@Param("dishName") String dishName);
-
     @Query("select d from Dish d where d.dishName = :dishName")
     List<Dish> findByName(@Param("dishName") String dishName);
 
-//    Query("select d from Dish d where d.dishName = :dishName")
     List<Dish> findAllByCategoryContains(String category);
-
-//    Query("select d from Dish d where d.dishName = :dishName")
-//    List<Dish> findByName(@Param("dishName") String dishName);
-//
-//    Query("select d from Dish d where d.dishName = :dishName")
-//    List<Dish> findByName(@Param("dishName") String dishName);
 
     List<Dish> findByOrderByPriceAsc();
 
     List<Dish> findByOrderByPriceDesc();
+
+    @Query("SELECT CASE WHEN COUNT(d) > 0 THEN true ELSE false " +
+            "END FROM Dish d WHERE d.dishName = :dishName")
+    boolean existsByName(@Param("dishName") String dishName);
 }

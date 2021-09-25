@@ -3,6 +3,7 @@ package epam.project.spring.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,7 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 @Table(name = "order_status")
 public class OrderStatus implements Serializable, Cloneable {
@@ -36,7 +38,6 @@ public class OrderStatus implements Serializable, Cloneable {
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @Override public Object clone() throws CloneNotSupportedException {

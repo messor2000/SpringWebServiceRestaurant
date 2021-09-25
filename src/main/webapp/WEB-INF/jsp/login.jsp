@@ -78,20 +78,20 @@
                             <input type="hidden" name="command" value="login"/>
                             <span id="usernameDemo" class="red"></span>
                             <div class="form-group">
-                                <label for="username" class="col-sm-3 control-label"><fmt:message
+                                <label for="login" class="col-sm-3 control-label"><fmt:message
                                         key="locale.username">Username</fmt:message></label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="username"
+                                    <input type="text" class="form-control" id="login"
                                            placeholder="<fmt:message key="locale.username">Username</fmt:message>"
                                            name="username" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password3" class="col-sm-3 control-label"><fmt:message
+                                <label for="password" class="col-sm-3 control-label"><fmt:message
                                         key="locale.password">Password</fmt:message></label>
                                 <span id="passwordDemo" class="red"></span>
                                 <div class="col-sm-7">
-                                    <input type="password" class="form-control" id="password3"
+                                    <input type="password" class="form-control" id="password"
                                            placeholder="<fmt:message key="locale.password">Password</fmt:message>"
                                            name="password" required>
                                 </div>
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <a href="<c:url value="/">">
+                        <a href="<c:url value="/"/>">
                             <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message
                                     key="locale.cancel">Cancel</fmt:message></button>
                         </a>
@@ -116,6 +116,7 @@
         </div>
     </div>
 </div>
+
 
 <c:import url="template/footer.jsp"/>
 
@@ -165,5 +166,4 @@
 </script>
 </body>
 </html>
-
 

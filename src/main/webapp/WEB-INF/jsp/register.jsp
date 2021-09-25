@@ -54,9 +54,7 @@
                         <c:remove var="errorMessage" scope="request"/>
                     </c:if>
                     <div class="modal-body text-center">
-<%--                        <form method="post" action="${pageContext.request.contextPath}/signup" role="form" class="form-horizontal">--%>
                         <form name="registerForm" class="form-horizontal" method="post" action="<c:url value="/sign/up"/>" onsubmit="return validateForm();">
-<%--                            <input type="hidden" name="command" value="register"/>--%>
                             <div class="form-group">
                                 <label for="inputUsername" class="col-sm-3 control-label">${username}</label>
                                 <span id="unameDemo" class="red"></span>

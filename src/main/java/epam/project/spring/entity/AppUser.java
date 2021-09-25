@@ -4,6 +4,7 @@ import epam.project.spring.dto.AppUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,6 +30,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 @Table(name = "app_user")
 public class AppUser implements Serializable, Cloneable {
@@ -51,17 +54,13 @@ public class AppUser implements Serializable, Cloneable {
 //    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private Set<UserRole> roles;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name="purse_id")
     private Purse purse;
 
-//    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Order order;
-
-//    public AppUser(String username, String password, Set<UserRole> role) {
-//        this.username = username;
-//        this.password = password;
-//        this.role = role;
-//    }
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<Order> order;
 
     public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }

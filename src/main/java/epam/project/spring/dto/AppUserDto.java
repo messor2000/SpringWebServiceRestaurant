@@ -28,7 +28,6 @@ public class AppUserDto implements Serializable {
     @Email
     private String email;
 
-    @NotBlank
 //    @Size(min = 8, max = 20)
     private String password;
 

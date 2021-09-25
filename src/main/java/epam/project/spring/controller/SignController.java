@@ -1,6 +1,8 @@
 package epam.project.spring.controller;
 
 import epam.project.spring.dto.AppUserDto;
+import epam.project.spring.entity.AppUser;
+import epam.project.spring.entity.Purse;
 import epam.project.spring.entity.Role;
 import epam.project.spring.service.user.UserService;
 import epam.project.spring.service.user_role.UserRoleService;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
@@ -24,10 +27,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import java.util.Optional;
+
 import static epam.project.spring.util.Constants.PARAM_LOGIN;
 import static epam.project.spring.util.Constants.PARAM_USER;
-import static epam.project.spring.util.Page.INDEX_PAGE;
-import static epam.project.spring.util.Page.REGISTRATION_PAGE;
+import static epam.project.spring.util.Page.*;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -59,7 +63,7 @@ public class SignController {
 
 //        user.setRole(Role.USER);
 
-        user.setRole("USER");
+        user.setRole("ADMIN");
 
         String password = user.getPassword();
         String passHash = passwordEncoder.encode(user.getPassword());
@@ -70,14 +74,36 @@ public class SignController {
             model.addAttribute(PARAM_LOGIN, user.getUsername());
             return "redirect:/error";
         }
+
         authWithAuthManager(request, user.getUsername(), password);
         session.setAttribute(PARAM_USER, user);
-        logger.info("create user with id = " + user.getId());
+        createPurseForUser();
+        logger.info("create user with username = " + user.getUsername());
         return "redirect:/";
-
-//        return new RedirectView("/");
-
     }
+
+//    @GetMapping(value = "/in")
+//    public String getSignInPage() {
+//        return SIGN_IN_PAGE;
+//    }
+//
+//    @PostMapping(value = "/in")
+//    public String singIn(HttpServletRequest request, HttpSession session, @Valid AppUserDto userDto, Model model) {
+//        Optional<AppUser> user = userService.findUserByLogin(userDto.getUsername());
+//
+//        if (!user.isPresent()) {
+//            model.addAttribute("error_user", true);
+//            model.addAttribute(PARAM_LOGIN, userDto.getUsername());
+//            return "redirect:/error";
+//        }
+//
+//        String password = passwordEncoder.encode(userDto.getPassword());
+//
+//        authWithAuthManager(request, user.get().getUsername(), password);
+//        session.setAttribute(PARAM_USER, user.get());
+//        logger.info("logged user with username = " + userDto.getUsername());
+//        return "redirect:/";
+//    }
 
     public void authWithAuthManager(HttpServletRequest request, String username, String password) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
@@ -87,4 +113,24 @@ public class SignController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
+    public void createPurseForUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            AppUser user = userService.findUserByLogin(username).get();
+
+            Purse purse = new Purse();
+            purse.setUser(user);
+
+
+            userService.createPurse(purse);
+
+            user.setPurse(purse);
+
+            logger.info("create purse for user with username = " + username);
+        }
+    }
+
 }

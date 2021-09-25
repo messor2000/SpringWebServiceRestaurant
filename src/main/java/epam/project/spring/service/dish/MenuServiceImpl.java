@@ -1,6 +1,7 @@
 package epam.project.spring.service.dish;
 
 import epam.project.spring.dto.DishDto;
+import epam.project.spring.entity.AppUser;
 import epam.project.spring.entity.Dish;
 import epam.project.spring.repo.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional
     public boolean addDish(DishDto dto) {
-        return false;
+
+        if (dishRepository.existsByName(dto.getName())) {
+            return false;
+        }
+
+        dishRepository.save(Dish.fromDto(dto));
+        return true;
     }
 
     @Override

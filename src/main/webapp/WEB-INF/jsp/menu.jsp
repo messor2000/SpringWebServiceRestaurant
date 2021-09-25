@@ -78,31 +78,12 @@
                     <label>
                         <select class="sortStat" name="y" onchange="MakeSort(this);">
                             <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>
-
-<%--                            <option href="/menu/fastFood"><fmt:message key="locale.fastFood">fastFood</fmt:message></option>--%>
-
-<%--                            <option href="/menu/healthyFood"><fmt:message key="locale.healthyFood">healthyFood</fmt:message></option>--%>
-
-<%--                            <option href="/menu/desert"><fmt:message key="locale.desert">desert</fmt:message></option>--%>
-
-<%--                            <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>--%>
-
                             <option value="/menu/fastFood"><fmt:message
                                     key="locale.fastFood">Fast food</fmt:message></option>
-
                             <option value="/menu/healthyFood"><fmt:message
                                     key="locale.healthyFood">Healthy food</fmt:message></option>
-
                             <option value="/menu/desert"><fmt:message
                                     key="locale.desert">Desert</fmt:message></option>
-
-
-<%--                            <option value="FrontController?command=show-menu-by-category&category=fast food">--%>
-<%--                                <fmt:message key="locale.fastFood">Fast food</fmt:message></option>--%>
-<%--                            <option value="FrontController?command=show-menu-by-category&category=healthy food">--%>
-<%--                                <fmt:message key="locale.healthyFood">Healthy food</fmt:message></option>--%>
-<%--                            <option value="FrontController?command=show-menu-by-category&category=desert"><fmt:message--%>
-<%--                                    key="locale.desert">Desert</fmt:message></option>--%>
                         </select>
                     </label>
                     <br>
@@ -116,6 +97,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
+
             <script type="text/javascript">
                 function MakeSort(element) {
                     const selected = $('option:selected', element),
@@ -126,6 +108,7 @@
                     document.location = href;
                 }
             </script>
+
             <br>
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
@@ -133,7 +116,7 @@
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title card-Title-Found">${dish.dishName}</h5>
+                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"><fmt:message
                                                 key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
@@ -144,16 +127,17 @@
                                                     key="locale.amount">Amount</fmt:message>:${dish.amount}</li>
                                         </c:if>
                                     </ul>
-                                        <%--                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>--%>
-                                        <%--                                        <div class="col-sm-7">--%>
-
-                                        <%--                                            <a href="FrontController?command=make-an-order&dishName=${dish.name}">--%>
-                                        <%--                                                <button type="button" class="btn btn-default"--%>
-                                        <%--                                                        data-dismiss="modal"><fmt:message key="locale.putInBucket">Put in bucket</fmt:message>--%>
-                                        <%--                                                </button>--%>
-                                        <%--                                            </a>--%>
-                                        <%--                                        </div>--%>
-                                        <%--                                    </c:if>--%>
+                                    <c:if test='${sessionScope.get("user").role eq "USER" || sessionScope.get("user").role eq "ADMIN"}'>
+                                        <div class="col-sm-7">
+                                            <a href="${pageContext.request.contextPath}/user/putInBucket">
+<%--                                            <a href="FrontController?command=make-an-order&dishName=${dish.name}">--%>
+                                                <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal"><fmt:message
+                                                        key="locale.putInBucket">Put in bucket</fmt:message>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

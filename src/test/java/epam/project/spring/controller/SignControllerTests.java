@@ -30,7 +30,7 @@ public class SignControllerTests {
 
     @Test
     public void securityTest() throws Exception {
-        this.mockMvc.perform(get("/user/progress"))
+        this.mockMvc.perform(get("/user/purse"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/sign/up"));
@@ -41,7 +41,7 @@ public class SignControllerTests {
         this.mockMvc.perform(formLogin().loginProcessingUrl("/sign/in").user("testUser").password("qwe12345"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/sign/up?error"));
+                .andExpect(redirectedUrl("/error"));
     }
 
 
@@ -52,6 +52,14 @@ public class SignControllerTests {
                 .param("password", "qwe12345"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/"));
+                .andExpect(forwardedUrl("/menu"));
     }
+
+//    @Test
+//    public void validateUserTest() throws Exception {
+//        this.mockMvc.perform(post("/sign/up")
+//                .param("login", "yulka-pulka")
+//                .param("password", "1234"))
+//                .andDo(print()).andExpect(status().is4xxClientError());
+//    }
 }

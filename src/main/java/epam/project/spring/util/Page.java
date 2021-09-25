@@ -4,21 +4,15 @@ package epam.project.spring.util;
  * @author Aleksandr Ovcharenko
  */
 public class Page {
-    public static final String ABOUT_PAGE = "about";
-    public static final String ADMIN_MEALS_PAGE = "admin_meals";
-    public static final String CL_INFO_PAGE = "client_info";
-    public static final String CL_EDIT_PAGE = "client_edit";
-    public static final String CONTACT_PAGE = "contact";
-    public static final String ERROR_PAGE = "error";
-    public static final String MEALS_PAGE = "meals";
-    public static final String PROGRESS_PAGE = "progress";
-    public static final String RECIPES_PAGE = "Recipes";
-
-
     public static final String INDEX_PAGE = "index";
     public static final String MENU_PAGE = "menu";
     public static final String REGISTRATION_PAGE = "register";
-    public static final String SIGN_UP_PAGE = "signup";
+    public static final String SIGN_IN_PAGE = "login";
+    public static final String PURSE = "purse";
+    public static final String ORDER = "order";
+    public static final String ORDERS = "orders";
+    public static final String ALL_USERS = "orders";
+    public static final String ADD_DISH = "addDish";
 
     private Page(){}
 }

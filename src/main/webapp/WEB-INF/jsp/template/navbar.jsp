@@ -67,24 +67,23 @@
             <div class="modal-body text-center">
 
                 <form name="loginForm" class="form-horizontal" method="post"
-                      action="<c:url value="/"/>" onsubmit="return validateForm();">
-<%--                    <input type="hidden" name="command" value="login"/>--%>
+                      action="<c:url value="/sign/in"/>" onsubmit="return validateForm();">
                     <span id="usernameDemo" class="red"></span>
                     <div class="form-group">
-                        <label for="username" class="col-sm-3 control-label"><fmt:message
+                        <label for="login" class="col-sm-3 control-label"><fmt:message
                                 key="locale.username">Username</fmt:message></label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="username"
+                            <input for="username" type="text" class="form-control" id="username"
                                    placeholder="<fmt:message key="locale.username">Username</fmt:message>"
                                    name="username" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password3" class="col-sm-3 control-label"><fmt:message
+                        <label for="password" class="col-sm-3 control-label"><fmt:message
                                 key="locale.password">Password</fmt:message></label>
                         <span id="passwordDemo" class="red"></span>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="password3"
+                            <input for="password" type="password" class="form-control" id="password"
                                    placeholder="<fmt:message key="locale.password">Password</fmt:message>"
                                    name="password" required>
                         </div>
@@ -159,7 +158,6 @@
             <div class="modal-body text-center">
                 <form name="registerForm" class="form-horizontal" method="post" action="<c:url value="/sign/up"/>"
                       onsubmit="return validateRegistration();">
-<%--                    <input type="hidden" name="command" value="register"/>--%>
                     <div class="form-group">
                         <label for="inputUsername" class="col-sm-3 control-label"><fmt:message
                                 key="locale.username">Username</fmt:message></label>
@@ -214,35 +212,35 @@
                         key="locale.cancel">Cancel</fmt:message></button>
             </div>
 
-<%--            <form method="post" action="${pageContext.request.contextPath}/signup" role="form" class="form-horizontal">--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="InputEmail" class="control-label"><fmt:message key="form.email"/></label>--%>
-<%--                    <input type="email" name="email" class="form-control" id="InputEmail"--%>
-<%--                           placeholder="<fmt:message key="placeholder.email"/>">--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="InputPassword" class="control-label"><fmt:message key="form.password"/></label>--%>
-<%--                    <input type="password" name="password" class="form-control" id="InputPassword"--%>
-<%--                           placeholder="<fmt:message key="placeholder.password"/>">--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="InputFirstName" class="control-label"><fmt:message key="form.firstName"/></label>--%>
-<%--                    <input type="text" name="first-name" class="form-control" id="InputFirstName"--%>
-<%--                           placeholder="<fmt:message key="placeholder.firstName"/>">--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="InputLastName" class="control-label"><fmt:message key="form.lastName"/></label>--%>
-<%--                    <input type="text" name="last-name" class="form-control" id="InputLastName"--%>
-<%--                           placeholder="<fmt:message key="placeholder.lastName"/>">--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="InputPhone" class="control-label"><fmt:message key="form.phone"/></label>--%>
-<%--                    <input type="text" name="phone" class="form-control" id="InputPhone"--%>
-<%--                           placeholder="<fmt:message key="placeholder.phone"/>">--%>
-<%--                </div>--%>
-<%--                <input type="hidden" name="role" value="VISITOR">--%>
-<%--                <button type="submit" class="btn btn-primary"><fmt:message key="ref.submit"/></button>--%>
-<%--            </form>--%>
+            <%--            <form method="post" action="${pageContext.request.contextPath}/signup" role="form" class="form-horizontal">--%>
+            <%--                <div class="form-group">--%>
+            <%--                    <label for="InputEmail" class="control-label"><fmt:message key="form.email"/></label>--%>
+            <%--                    <input type="email" name="email" class="form-control" id="InputEmail"--%>
+            <%--                           placeholder="<fmt:message key="placeholder.email"/>">--%>
+            <%--                </div>--%>
+            <%--                <div class="form-group">--%>
+            <%--                    <label for="InputPassword" class="control-label"><fmt:message key="form.password"/></label>--%>
+            <%--                    <input type="password" name="password" class="form-control" id="InputPassword"--%>
+            <%--                           placeholder="<fmt:message key="placeholder.password"/>">--%>
+            <%--                </div>--%>
+            <%--                <div class="form-group">--%>
+            <%--                    <label for="InputFirstName" class="control-label"><fmt:message key="form.firstName"/></label>--%>
+            <%--                    <input type="text" name="first-name" class="form-control" id="InputFirstName"--%>
+            <%--                           placeholder="<fmt:message key="placeholder.firstName"/>">--%>
+            <%--                </div>--%>
+            <%--                <div class="form-group">--%>
+            <%--                    <label for="InputLastName" class="control-label"><fmt:message key="form.lastName"/></label>--%>
+            <%--                    <input type="text" name="last-name" class="form-control" id="InputLastName"--%>
+            <%--                           placeholder="<fmt:message key="placeholder.lastName"/>">--%>
+            <%--                </div>--%>
+            <%--                <div class="form-group">--%>
+            <%--                    <label for="InputPhone" class="control-label"><fmt:message key="form.phone"/></label>--%>
+            <%--                    <input type="text" name="phone" class="form-control" id="InputPhone"--%>
+            <%--                           placeholder="<fmt:message key="placeholder.phone"/>">--%>
+            <%--                </div>--%>
+            <%--                <input type="hidden" name="role" value="VISITOR">--%>
+            <%--                <button type="submit" class="btn btn-primary"><fmt:message key="ref.submit"/></button>--%>
+            <%--            </form>--%>
         </div>
     </div>
 </div>

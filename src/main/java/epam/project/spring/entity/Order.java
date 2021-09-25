@@ -4,6 +4,7 @@ import epam.project.spring.dto.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,6 +37,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 @Table(name = "order")
 public class Order implements Serializable, Cloneable {
@@ -44,12 +46,12 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private Set<OrderStatus> status;
 
-//    @OneToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private AppUser user;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AppUser user;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,36 +71,31 @@ public class Order implements Serializable, Cloneable {
                             nullable = false, updatable = false)})
     private Set<Dish> dishes = new HashSet<>();
 
-    public Order(Set<OrderStatus> status, Date creationDate, Date updateDate, Set<Dish> dishes) {
+    public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
         this.status = status;
-//        this.user = user;
+        this.user = user;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.dishes = dishes;
     }
 
-    public static Order of(Long id, Set<OrderStatus> status, Date creationDate, Date updateDate)  {
+    public static Order of(Long id, AppUser user, Set<OrderStatus> status, Date creationDate, Date updateDate)  {
         return Order.builder()
                 .id(id)
                 .status(status)
-//                .user(user)
+                .user(user)
                 .creationDate(creationDate)
                 .updateDate(updateDate)
                 .build();
     }
 
-//    public Order fromDto(OrderDto orderDto) {
-//        return Order.of(orderDto.getId(), orderDto.getStatus(), orderDto.getUser(),
-//                orderDto.getCreationDate(), orderDto.getUpdateDate());
-//    }
-
     public Order fromDto(OrderDto orderDto) {
-        return Order.of(orderDto.getId(), orderDto.getStatus(),
-                orderDto.getCreationDate(), orderDto.getUpdateDate());
+        return Order.of(orderDto.getId(), orderDto.getUser(), orderDto.getStatus(),
+                        orderDto.getCreationDate(), orderDto.getUpdateDate());
     }
 
     public OrderDto toDto() {
-        return OrderDto.of(id, status, creationDate, updateDate);
+        return OrderDto.of(id, status, user, creationDate, updateDate);
     }
 
     @Override

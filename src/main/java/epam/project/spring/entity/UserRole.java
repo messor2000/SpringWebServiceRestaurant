@@ -1,6 +1,7 @@
 package epam.project.spring.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -20,6 +21,7 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "user_role")
 public class UserRole implements Serializable, Cloneable {
     @Id

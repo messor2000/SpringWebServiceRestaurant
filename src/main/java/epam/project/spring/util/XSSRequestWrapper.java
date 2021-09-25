@@ -1,14 +1,17 @@
 package epam.project.spring.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
-import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author Aleksandr Ovcharenko
  */
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
+
+    static final Logger logger = LogManager.getLogger();
 
     public XSSRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
@@ -16,34 +19,56 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String[] getParameterValues(String parameter) {
+        logger.info("InarameterValues parameter ");
         String[] values = super.getParameterValues(parameter);
-
         if (values == null) {
             return null;
         }
-
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            encodedValues[i] = stripXSS(values[i]);
+            encodedValues[i] = cleanXSS(values[i]);
         }
-
         return encodedValues;
     }
 
     @Override
     public String getParameter(String parameter) {
+        logger.info("Inarameter parameter ");
         String value = super.getParameter(parameter);
-        return stripXSS(value);
+        if (value == null) {
+            return null;
+        }
+        logger.info("Inarameter RequestWrapper value ");
+        return cleanXSS(value);
     }
 
     @Override
     public String getHeader(String name) {
+        logger.info("Ineader parameter ");
         String value = super.getHeader(name);
-        return stripXSS(value);
+        if (value == null)
+            return null;
+        logger.info("Ineader RequestWrapper value ");
+        return cleanXSS(value);
     }
 
-    private String stripXSS(String value) {
-        return StringEscapeUtils.escapeHtml(value);
+    private String cleanXSS(String value) {
+        // You'll need to remove the spaces from the html entities below
+        logger.info("InnXSS RequestWrapper " + value);
+        //value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
+        value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
+        value = value.replaceAll("'", "& #39;");
+        value = value.replaceAll("eval\\((.*)\\)", "");
+        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+
+        value = value.replaceAll("(?i)<script.*?>.*?<script.*?>", "");
+        value = value.replaceAll("(?i)<script.*?>.*?</script.*?>", "");
+        value = value.replaceAll("(?i)<.*?javascript:.*?>.*?</.*?>", "");
+        value = value.replaceAll("(?i)<.*?\\s+on.*?>.*?</.*?>", "");
+        value = value.replaceAll("<script>", "");
+        value = value.replaceAll("</script>", "");
+        logger.info("OutnXSS RequestWrapper value " + value);
+        return value;
     }
 }

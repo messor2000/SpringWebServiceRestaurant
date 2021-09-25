@@ -42,6 +42,7 @@ class UserServiceTests {
         assertFalse(res);
     }
 
+
 //    @Test
 //    void testAddRoleToNewUser() {
 //        UserRole roleManager = roleRepository.findByName("MANAGER").get();
@@ -73,4 +74,9 @@ class UserServiceTests {
 //        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
 //
 //    }
+
+    @Test
+    public void addPurseToUserTest() {
+
+    }
 }

@@ -4,8 +4,10 @@ import epam.project.spring.dto.PurseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +25,7 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 @Table(name = "purse")
 public class Purse implements Serializable, Cloneable {
@@ -31,8 +34,7 @@ public class Purse implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(mappedBy="purse")
     private AppUser user;
 
     @Column(name = "amount")

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -20,6 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,6 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.
+//                inMemoryAuthentication()
+//                .withUser("testuser").password("password").roles("USER")
+//                .and()
+//                .withUser("admin").password("4c8bef50528ba16268fb268490fef63f2acb1bda137e32777a7d7652b9862459a39fbb6593a18c18").roles("ADMIN");
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
@@ -42,12 +50,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/admin/*")
                         .hasRole("ADMIN")
-                    .antMatchers("/user/*", "/client/*")
+                    .antMatchers("/user/*")
                         .hasAnyRole("ADMIN", "USER")
                     .and()
                 .exceptionHandling()
                     .accessDeniedPage("/")
                     .and()
+//                .formLogin()
+//                    .loginPage("/sign/in")
+//                    .loginProcessingUrl("/sign/in")
+//                    .failureUrl("/error")
+//                    .usernameParameter("username")
+//                    .passwordParameter("password")
+//                        .permitAll()
+//                    .successForwardUrl("/menu")
+//                    .and()
                 .formLogin()
                     .loginPage("/sign/up")
                     .loginProcessingUrl("/sign/in")
@@ -55,16 +72,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("username")
                     .passwordParameter("password")
                         .permitAll()
-                    .successForwardUrl("/")
+                    .successForwardUrl("/menu")
                     .and()
                 .logout()
                     .permitAll()
                     .logoutUrl("/sign/out")
                     .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true);
-
+                    .invalidateHttpSession(true)
+                .and()
+                    .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("testuser").password("password").roles("USER")
+//                .and()
+//                .withUser("admin").password("password").roles("ADMIN");
+//    }
 
     @Override
     @Bean

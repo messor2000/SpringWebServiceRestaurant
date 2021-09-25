@@ -4,18 +4,15 @@ import epam.project.spring.dto.DishDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -24,6 +21,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 @Table(name = "dish")
 public class Dish implements Serializable, Cloneable {
@@ -73,7 +71,7 @@ public class Dish implements Serializable, Cloneable {
     }
 
     public static Dish fromDto(DishDto dishDto) {
-        return Dish.of(dishDto.getId(), dishDto.getDishName(), dishDto.getPrice(), dishDto.getCategory(),
+        return Dish.of(dishDto.getId(), dishDto.getName(), dishDto.getPrice(), dishDto.getCategory(),
                 dishDto.getAmount());
     }
 
