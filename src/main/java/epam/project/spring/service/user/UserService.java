@@ -23,12 +23,18 @@ public interface UserService {
     @Transactional
     boolean checkUser(AppUserDto userDto);
 
-    @Transactional
-    void setPurseForUser(AppUserDto userDto);
-
-    @Transactional
-    PurseDto checkPurseAmount(AppUserDto userDto);
+//    @Transactional
+//    void setPurseForUser(AppUserDto userDto);
+//
+//    @Transactional
+//    PurseDto checkPurseAmount(AppUserDto userDto);
 
     @Transactional
     void createPurse(Purse purse);
+
+    @Transactional
+    Purse showUserPurse(AppUserDto user);
+
+    @Transactional
+    boolean topUpPurse(int amount, AppUserDto userDto);
 }

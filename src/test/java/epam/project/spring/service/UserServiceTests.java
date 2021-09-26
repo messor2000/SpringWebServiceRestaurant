@@ -74,9 +74,4 @@ class UserServiceTests {
 //        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
 //
 //    }
-
-    @Test
-    public void addPurseToUserTest() {
-
-    }
 }

@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -34,7 +35,8 @@ public class Purse implements Serializable, Cloneable {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToOne(mappedBy="purse")
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private AppUser user;
 
     @Column(name = "amount")

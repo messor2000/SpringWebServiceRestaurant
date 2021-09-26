@@ -7,6 +7,7 @@ import epam.project.spring.entity.Purse;
 import epam.project.spring.repo.AppUserRepository;
 import epam.project.spring.repo.PurseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,7 +30,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        userRepository.save(AppUser.fromDto(userDto));
+        Purse purse = new Purse();
+        userDto.setPurse(purse);
+        purse.setUser(AppUser.fromDto(userDto));
+
+        purseRepository.save(purse);
 
         return true;
     }
@@ -47,40 +52,57 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByLogin(username);
     }
 
-    @Override
+//    @Override
     @Transactional
     public boolean checkUser(AppUserDto userDto) {
         return userRepository.existsByLogin(userDto.getUsername());
     }
 
-    @Override
-    @Transactional
-    public void setPurseForUser(AppUserDto userDto) {
-        if (!createUser(userDto)) {
-            return;
-        }
+//    @Override
+//    @Transactional
+//    public void setPurseForUser(AppUserDto userDto) {
+//        if (!createUser(userDto)) {
+//            return;
+//        }
+//
+//        AppUser user = AppUser.fromDto(userDto);
+//        PurseDto purseDto = new PurseDto();
+//
+//        purseDto.setUser(user);
+//        user.setPurse(Purse.fromDto(purseDto));
+//
+//        createPurse(Purse.fromDto(purseDto));
+//    }
 
-        AppUser user = AppUser.fromDto(userDto);
-        PurseDto purseDto = new PurseDto();
-
-        purseDto.setUser(user);
-        user.setPurse(Purse.fromDto(purseDto));
-
-        purseRepository.save(Purse.fromDto(purseDto));
-    }
-
-    @Override
-    @Transactional
-    public PurseDto checkPurseAmount(AppUserDto userDto) {
-
-        AppUser user = AppUser.fromDto(userDto);
-
-        return purseRepository.showPurseAmount(user).toDto();
-    }
+//    @Override
+//    @Transactional
+//    public PurseDto checkPurseAmount(AppUserDto userDto) {
+//
+//        AppUser user = AppUser.fromDto(userDto);
+//
+//        return purseRepository.showPurseAmount(user).toDto();
+//    }
 
     @Override
     @Transactional
     public void createPurse(Purse purse) {
         purseRepository.save(purse);
+    }
+
+    @Override
+    public Purse showUserPurse(AppUserDto user) {
+        return purseRepository.showPurseAmount(AppUser.fromDto(user));
+    }
+
+    @Override
+    @Transactional
+    public boolean topUpPurse(int amount, AppUserDto userDto) {
+        if (amount <= 0) {
+            return false;
+        }
+        AppUser user = AppUser.fromDto(userDto);
+
+        purseRepository.topUpPurse(amount, user);
+        return true;
     }
 }

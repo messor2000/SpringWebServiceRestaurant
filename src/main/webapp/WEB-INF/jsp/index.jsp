@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
-    <link rel="shortcut icon" href="../../static/image/logo.ico" />
+    <link rel="shortcut icon" href="../../static/image/logo.ico"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../static/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -45,19 +45,19 @@
                 <div u="slides"
                      style="position: absolute; left: 0; top: 0; width: 1000px; height: 700px;overflow: hidden;">
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=fast food"><img u="image"
-                                                                                                        src="../../static/image/fastfood.jpg"
-                                                                                                        alt="fastfood"/></a>
+                        <a href="${pageContext.request.contextPath}/menu/fastFood"><img u="image"
+                                                                                        src="../../static/image/fastfood.jpg"
+                                                                                        alt="fastfood"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=healthy food"><img u="image"
-                                                                                                           src="../../static/image/healthy.jpg"
-                                                                                                           alt="healthy"/></a>
+                        <a href="${pageContext.request.contextPath}/menu/healthyFood"><img u="image"
+                                                                                           src="../../static/image/healthy.jpg"
+                                                                                           alt="healthy"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=desert"><img u="image"
-                                                                                                     src="../../static/image/desert.jpg"
-                                                                                                     alt="desert"/></a>
+                        <a href="${pageContext.request.contextPath}/menu/desert"><img u="image"
+                                                                                      src="../../static/image/desert.jpg"
+                                                                                      alt="desert"/></a>
                     </div>
                 </div>
             </div>

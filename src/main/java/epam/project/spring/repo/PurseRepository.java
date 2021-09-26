@@ -15,4 +15,9 @@ public interface PurseRepository extends JpaRepository<Purse, Long> {
 
     @Query("select p from Purse p where p.user = :user")
     Purse showPurseAmount(@Param("user") AppUser user);
+
+    @Query("update Purse set amount=amount + :amount where user = :user")
+    void topUpPurse(@Param("amount") int amount, @Param("user") AppUser user);
 }
+
+//"update purse set amount=amount+? where user_id=?"

@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithUserDetails("manager")
 @TestPropertySource("/application-test.properties")
 class UserControllerTests {
     @Autowired
@@ -40,7 +41,7 @@ class UserControllerTests {
     @Test
     void validateUserTest() throws Exception {
         this.mockMvc.perform(post("/sign/up")
-                .param("username", "1%:!^&*%!")
+                .param("username", "<script>alert('200')</script>")
                 .param("password", "1234"))
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
@@ -53,17 +54,20 @@ class UserControllerTests {
                 .andDo(print()).andExpect(status().is3xxRedirection());
     }
 
-//    @Test
+    @Test
 //    @WithUserDetails("test")
-//    void validPurseAmountTest() throws Exception {
-//        this.mockMvc.perform(post("/user/product")
-//                .param("name", "TestProduct")
-//                .param("calories", "-10")
-//                .param("protein", "5000")
-//                .param("fats", "")
-//                .param("carbohydrates", ""))
-//                .andDo(print()).andExpect(status().is4xxClientError());
-//    }
+    void validPurseAmountTest() throws Exception {
+        this.mockMvc.perform(post("/user/topUpPurse")
+                .param("amount", "-10"))
+                .andDo(print()).andExpect(status().is4xxClientError());
+    }
+
+    @Test
+//    @WithUserDetails("username")
+    void showUserPurse() throws Exception {
+        this.mockMvc.perform(post("/user/purse"))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
+    }
 
 //    @Test
 //    @WithUserDetails("test")

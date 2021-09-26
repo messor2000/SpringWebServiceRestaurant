@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -77,7 +78,7 @@ public class SignController {
 
         authWithAuthManager(request, user.getUsername(), password);
         session.setAttribute(PARAM_USER, user);
-        createPurseForUser();
+
         logger.info("create user with username = " + user.getUsername());
         return "redirect:/";
     }
@@ -113,24 +114,4 @@ public class SignController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-    public void createPurseForUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails) principal).getUsername();
-            AppUser user = userService.findUserByLogin(username).get();
-
-            Purse purse = new Purse();
-            purse.setUser(user);
-
-
-            userService.createPurse(purse);
-
-            user.setPurse(purse);
-
-            logger.info("create purse for user with username = " + username);
-        }
-    }
-
 }

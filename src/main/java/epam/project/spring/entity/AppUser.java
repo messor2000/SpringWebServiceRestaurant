@@ -54,8 +54,7 @@ public class AppUser implements Serializable, Cloneable {
 //    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private Set<UserRole> roles;
 
-    @OneToOne
-    @JoinColumn(name="purse_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Purse purse;
 
     @OneToMany(cascade=CascadeType.ALL)
@@ -79,11 +78,15 @@ public class AppUser implements Serializable, Cloneable {
     }
 
     public AppUserDto toDto() {
-        return AppUserDto.of(id, username, null, email, role);
+        return AppUserDto.of(id, username, null, email, role, purse);
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public void setUserPurse(Purse purse) {
+        purse.setUser(this);
     }
 }

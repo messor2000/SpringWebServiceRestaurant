@@ -7,12 +7,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -42,16 +49,24 @@ public class Dish implements Serializable, Cloneable {
     @Column(name = "amount")
     private int amount;
 
-//    @ManyToMany(mappedBy = "order", fetch = FetchType.LAZY)
-//    private Set<Order> orders = new HashSet<>();
+//    @ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
 
-//    public Dish(String dishName, int price, String category, int amount, Set<Order> orders) {
-//        this.dishName = dishName;
-//        this.price = price;
-//        this.category = category;
-//        this.amount = amount;
-//        this.orders = orders;
-//    }
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "dishes_orders",
+            joinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)})
+
+//            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
+    private Set<Order> orders = new HashSet<>();
+
+    public Dish(String dishName, int price, String category, int amount, Set<Order> orders) {
+        this.dishName = dishName;
+        this.price = price;
+        this.category = category;
+        this.amount = amount;
+        this.orders = orders;
+    }
 
     public Dish(String dishName, int price, String category, int amount) {
         this.dishName = dishName;

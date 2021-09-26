@@ -1,6 +1,11 @@
 package epam.project.spring;
 
+import epam.project.spring.entity.AppUser;
+import epam.project.spring.entity.Purse;
 import epam.project.spring.filter.XSSFilter;
+import epam.project.spring.repo.AppUserRepository;
+import epam.project.spring.service.user.UserService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -52,6 +57,21 @@ public class RestaurantWebService extends SpringBootServletInitializer {
 //        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 //        viewResolver.setTemplateEngine(engine);
 //        return viewResolver;
+//    }
+
+//    @Bean
+//    public CommandLineRunner addEatPeriod(final UserService userService, final AppUserRepository userRepository) {
+//        return new CommandLineRunner() {
+//            @Override
+//            public void run(String... strings) throws Exception {
+//                AppUser user = userService.findUserByLogin("test").get();
+//
+//                Purse purse =
+//                UserRole userRole = userRoleService.findUserRoleByName("ADMIN").get();
+//                user.setRole(userRole);
+//                userRepository.save(user);
+//            }
+//        };
 //    }
 
 }

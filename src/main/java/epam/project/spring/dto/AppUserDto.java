@@ -1,5 +1,6 @@
 package epam.project.spring.dto;
 
+import epam.project.spring.entity.Purse;
 import epam.project.spring.entity.Role;
 import epam.project.spring.entity.UserRole;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,9 @@ public class AppUserDto implements Serializable {
 
     private String role;
 
-    public static AppUserDto of(Long id, String username, String password, String email, String role) {
-        return new AppUserDto(id, username, password, email, role);
+    private Purse purse;
+
+    public static AppUserDto of(Long id, String username, String password, String email, String role, Purse purse) {
+        return new AppUserDto(id, username, password, email, role, purse);
     }
 }

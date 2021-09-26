@@ -63,12 +63,11 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "dishes_orders",
-            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id",
-                    nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name",
-                            nullable = false, updatable = false)})
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "dishes_orders",
+//            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
+    @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
     private Set<Dish> dishes = new HashSet<>();
 
     public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
@@ -89,7 +88,7 @@ public class Order implements Serializable, Cloneable {
                 .build();
     }
 
-    public Order fromDto(OrderDto orderDto) {
+    public static Order fromDto(OrderDto orderDto) {
         return Order.of(orderDto.getId(), orderDto.getUser(), orderDto.getStatus(),
                         orderDto.getCreationDate(), orderDto.getUpdateDate());
     }

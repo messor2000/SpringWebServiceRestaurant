@@ -54,13 +54,11 @@
 
                 <div class="col-sm-7">
                     <form name="toUpAPurse" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/user/topUpPurse">
-<%--                        <input type="hidden" name="command" value="top-up-purse"/>--%>
                         <div class="toUpAPurse" >
                             <div class="form-group">
                                 <span id="amount" class="red"></span>
                                 <div class="col-sm-7 input-amount">
-                                    <label for="purseAmount"></label>
-                                    <input type="text" class="form-control" id="purseAmount" placeholder="<fmt:message key="locale.topUp">Top up</fmt:message>"
+                                    <input for="purseAmount" type="text" class="form-control" id="purseAmount" placeholder="<fmt:message key="locale.topUp">Top up</fmt:message>"
                                             name="amount" required>
                                 </div>
                             </div>

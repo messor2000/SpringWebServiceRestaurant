@@ -130,7 +130,6 @@
                                     <c:if test='${sessionScope.get("user").role eq "USER" || sessionScope.get("user").role eq "ADMIN"}'>
                                         <div class="col-sm-7">
                                             <a href="${pageContext.request.contextPath}/user/putInBucket">
-<%--                                            <a href="FrontController?command=make-an-order&dishName=${dish.name}">--%>
                                                 <button type="button" class="btn btn-default"
                                                         data-dismiss="modal"><fmt:message
                                                         key="locale.putInBucket">Put in bucket</fmt:message>
