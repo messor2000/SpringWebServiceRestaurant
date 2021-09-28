@@ -31,13 +31,14 @@ import java.io.Serializable;
 public class OrderStatus implements Serializable, Cloneable {
     @Id
     @GeneratedValue
-    @Column(name = "id", insertable = false, updatable = false, nullable = false)
+//    @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
     @Column(name = "status")
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @Override public Object clone() throws CloneNotSupportedException {

@@ -1,7 +1,6 @@
 package epam.project.spring.service.dish;
 
 import epam.project.spring.dto.DishDto;
-import epam.project.spring.entity.AppUser;
 import epam.project.spring.entity.Dish;
 import epam.project.spring.repo.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -31,18 +29,6 @@ public class MenuServiceImpl implements MenuService {
         dishRepository.save(Dish.fromDto(dto));
         return true;
     }
-
-    @Override
-    @Transactional
-    public Optional<Dish> findDishById(Long id) {
-        return dishRepository.findById(id);
-    }
-
-//    @Override
-//    @Transactional
-//    public Optional<Dish> findDishByName(String name) {
-//        return dishRepository.findByName(name);
-//    }
 
     @Override
     @Transactional

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -17,6 +18,7 @@ public class PurseDto {
 
     private Long id;
 
+    @NotBlank
     @Min(value = 0)
     private int amount;
 

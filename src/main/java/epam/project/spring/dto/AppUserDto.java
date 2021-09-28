@@ -23,24 +23,17 @@ public class AppUserDto implements Serializable {
 
     private Long id;
 
-//    @NotBlank
+    @NotBlank
     private String username;
 
     @Email
     private String email;
 
-//    @Size(min = 8, max = 20)
+    @NotBlank
+    @Size(min = 8, max = 20)
     private String password;
 
-//    @NotBlank
-////    @Size(min = 8, max = 20)
-//    private String passwordRepeat;
-
-//    private Set<UserRole> role;
-
     private String role;
-
-//    private Purse purse;
 
     public static AppUserDto of(Long id, String username, String password, String email, String role) {
         return new AppUserDto(id, username, password, email, role);

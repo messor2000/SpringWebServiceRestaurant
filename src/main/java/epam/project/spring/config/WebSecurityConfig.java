@@ -58,15 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                     .accessDeniedPage("/")
                     .and()
-//                .formLogin()
-//                    .loginPage("/sign/in")
-//                    .loginProcessingUrl("/sign/in")
-//                    .failureUrl("/error")
-//                    .usernameParameter("username")
-//                    .passwordParameter("password")
-//                        .permitAll()
-//                    .successForwardUrl("/menu")
-//                    .and()
                 .formLogin()
                     .loginPage("/sign/up")
                     .loginProcessingUrl("/sign/in")
@@ -84,14 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("testuser").password("password").roles("USER")
-//                .and()
-//                .withUser("admin").password("password").roles("ADMIN");
-//    }
 
     @Override
     @Bean

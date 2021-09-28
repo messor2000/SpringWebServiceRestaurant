@@ -43,15 +43,15 @@ import java.util.Set;
 @Table(name = "user_order")
 public class Order implements Serializable, Cloneable {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id", insertable = false, updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "order_id")
     private Set<OrderStatus> status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private AppUser user;
 
@@ -65,11 +65,11 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "update_date")
     private Date updateDate;
 
+        @ManyToMany(fetch = FetchType.EAGER,mappedBy = "orders")
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "dishes_orders",
 //            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)},
 //            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
-    @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
     private Set<Dish> dishes = new HashSet<>();
 
     public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
@@ -80,7 +80,7 @@ public class Order implements Serializable, Cloneable {
         this.dishes = dishes;
     }
 
-    public static Order of(Long id, AppUser user, Set<OrderStatus> status, Date creationDate, Date updateDate)  {
+    public static Order of(Long id, AppUser user, Set<OrderStatus> status, Date creationDate, Date updateDate) {
         return Order.builder()
                 .id(id)
                 .status(status)
@@ -92,7 +92,7 @@ public class Order implements Serializable, Cloneable {
 
     public static Order fromDto(OrderDto orderDto) {
         return Order.of(orderDto.getId(), orderDto.getUser(), orderDto.getStatus(),
-                        orderDto.getCreationDate(), orderDto.getUpdateDate());
+                orderDto.getCreationDate(), orderDto.getUpdateDate());
     }
 
     public OrderDto toDto() {

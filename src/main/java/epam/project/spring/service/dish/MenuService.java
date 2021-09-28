@@ -16,12 +16,6 @@ public interface MenuService {
     boolean addDish(DishDto dto);
 
     @Transactional
-    Optional<Dish> findDishById(Long id);
-
-//    @Transactional
-//    Optional<Dish> findDishByName(String name);
-
-    @Transactional
     List<DishDto> findDishByName(String name);
 
     @Transactional

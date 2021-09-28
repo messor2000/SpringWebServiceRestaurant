@@ -43,7 +43,6 @@ public class AdminController {
         return MENU_PAGE;
     }
 
-    //TODO add ability to add new dish
     @GetMapping(value = "/addDish")
     public String addDish() {
         return ADD_DISH;
@@ -64,7 +63,6 @@ public class AdminController {
         if (!menuService.addDish(dish)) {
             return "redirect:/error";
         }
-
 
         logger.info("add new dish with name: " + dish.getName());
 
