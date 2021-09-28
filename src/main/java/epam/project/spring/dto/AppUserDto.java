@@ -40,9 +40,9 @@ public class AppUserDto implements Serializable {
 
     private String role;
 
-    private Purse purse;
+//    private Purse purse;
 
-    public static AppUserDto of(Long id, String username, String password, String email, String role, Purse purse) {
-        return new AppUserDto(id, username, password, email, role, purse);
+    public static AppUserDto of(Long id, String username, String password, String email, String role) {
+        return new AppUserDto(id, username, password, email, role);
     }
 }

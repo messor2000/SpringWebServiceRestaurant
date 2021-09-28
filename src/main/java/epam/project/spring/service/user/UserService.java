@@ -36,5 +36,5 @@ public interface UserService {
     Purse showUserPurse(AppUserDto user);
 
     @Transactional
-    boolean topUpPurse(int amount, AppUserDto userDto);
+    boolean topUpPurse(int amount, AppUser userDto);
 }

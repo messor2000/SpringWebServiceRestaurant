@@ -109,37 +109,49 @@
                 }
             </script>
 
+
+            <%--            path="playerId"--%>
             <br>
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
                     <c:forEach var="dish" items="${dish}">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><fmt:message
-                                                key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
-                                        <li class="list-group-item"><fmt:message
-                                                key="locale.category">Category</fmt:message>:${dish.category}</li>
-                                        <c:if test='${sessionScope.get("user").role eq "manager"}'>
+                        <form method="post" path="name" action="${pageContext.request.contextPath}/user/putInBucket"
+                              class="form-horizontal">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                            <%--                                        <input type="hidden" name="oldEmail" value="${dish.name}"> --%>
+
+                                            <%--                                        <h5 <input type="hidden" name="dish" value="${dish.name}" class="card-title card-Title-Found"><fmt:message--%>
+                                            <%--                                            key="locale.dishName">Name</fmt:message>:${dish.name}"</h5>--%>
+
+                                        <input type="hidden" name="name" value="${dish.name}"
+                                               class="card-title card-Title-Found"><fmt:message
+                                            key="locale.dishName">Name</fmt:message>:${dish.name}
+
+                                        <ul class="list-group list-group-flush">
                                             <li class="list-group-item"><fmt:message
-                                                    key="locale.amount">Amount</fmt:message>:${dish.amount}</li>
-                                        </c:if>
-                                    </ul>
-                                    <c:if test='${sessionScope.get("user").role eq "USER" || sessionScope.get("user").role eq "ADMIN"}'>
-                                        <div class="col-sm-7">
-                                            <a href="${pageContext.request.contextPath}/user/putInBucket">
-                                                <button type="button" class="btn btn-default"
+                                                    key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
+                                            <li class="list-group-item"><fmt:message
+                                                    key="locale.category">Category</fmt:message>:${dish.category}</li>
+                                            <c:if test='${sessionScope.get("user").role eq "manager"}'>
+                                                <li class="list-group-item"><fmt:message
+                                                        key="locale.amount">Amount</fmt:message>:${dish.amount}</li>
+                                            </c:if>
+                                        </ul>
+                                        <c:if test='${sessionScope.get("user").role eq "USER" || sessionScope.get("user").role eq "ADMIN"}'>
+                                            <div class="col-sm-7">
+                                                <button type="submit" class="btn btn-default"
                                                         data-dismiss="modal"><fmt:message
                                                         key="locale.putInBucket">Put in bucket</fmt:message>
                                                 </button>
-                                            </a>
-                                        </div>
-                                    </c:if>
+                                            </div>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </c:forEach>
                 </div>
             </div>

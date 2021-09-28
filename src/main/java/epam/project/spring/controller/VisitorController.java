@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+import static epam.project.spring.util.Constants.PARAM_DISH;
 import static epam.project.spring.util.Page.*;
 
 /**
@@ -31,7 +32,7 @@ public class VisitorController {
     @RequestMapping(value = "/menu")
     public String menu(Model model) {
         List<DishDto> dishes = menuService.showAllMenu();
-        model.addAttribute("dish", dishes);
+        model.addAttribute(PARAM_DISH, dishes);
         return MENU_PAGE;
     }
 
@@ -40,7 +41,7 @@ public class VisitorController {
         String name = request.getParameter("dishName");
         List<DishDto> dish = menuService.findDishByName(name);
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 
@@ -48,7 +49,7 @@ public class VisitorController {
     public String menuFormHighToLow(Model model) {
         List<DishDto> dish = menuService.showAllMenuFromHighPriceToLow();
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 
@@ -56,7 +57,7 @@ public class VisitorController {
     public String menuFormLowToHigh(Model model) {
         List<DishDto> dish = menuService.showAllMenuFromLowPriceToHigh();
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 
@@ -65,7 +66,7 @@ public class VisitorController {
         String category = "Fast food";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 
@@ -74,7 +75,7 @@ public class VisitorController {
         String category = "Healthy food";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 
@@ -83,7 +84,7 @@ public class VisitorController {
         String category = "Desert";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
-        model.addAttribute("dish", dish);
+        model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
 

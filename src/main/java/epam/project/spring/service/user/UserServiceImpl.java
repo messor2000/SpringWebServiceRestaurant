@@ -31,10 +31,11 @@ public class UserServiceImpl implements UserService {
         }
 
         Purse purse = new Purse();
-        userDto.setPurse(purse);
+//        userDto.setPurse(purse);
         purse.setUser(AppUser.fromDto(userDto));
 
         purseRepository.save(purse);
+
 
         return true;
     }
@@ -96,11 +97,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean topUpPurse(int amount, AppUserDto userDto) {
+    public boolean topUpPurse(int amount, AppUser user) {
         if (amount <= 0) {
             return false;
         }
-        AppUser user = AppUser.fromDto(userDto);
 
         purseRepository.topUpPurse(amount, user);
         return true;

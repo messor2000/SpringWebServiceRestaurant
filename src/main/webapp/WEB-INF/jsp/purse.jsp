@@ -45,7 +45,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><fmt:message key="locale.purseAmount">Your waller amount</fmt:message>:${purse.amount}</li>
+                                    <li class="list-group-item"><fmt:message key="locale.purseAmount">Your waller amount</fmt:message>:${sessionScope.purse.amount}</li>
                                 </ul>
                             </div>
                         </div>

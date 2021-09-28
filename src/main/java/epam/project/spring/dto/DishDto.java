@@ -16,7 +16,6 @@ public class DishDto {
 
     private Long id;
 
-    @NotBlank
     private String name;
 
     private int price;

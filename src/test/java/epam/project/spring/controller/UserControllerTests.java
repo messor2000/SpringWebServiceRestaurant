@@ -10,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithUserDetails("manager")
+//@WithUserDetails("manager")
 @TestPropertySource("/application-test.properties")
 class UserControllerTests {
     @Autowired
@@ -55,7 +56,7 @@ class UserControllerTests {
     }
 
     @Test
-//    @WithUserDetails("test")
+    @WithUserDetails("username")
     void validPurseAmountTest() throws Exception {
         this.mockMvc.perform(post("/user/topUpPurse")
                 .param("amount", "-10"))
@@ -63,10 +64,18 @@ class UserControllerTests {
     }
 
     @Test
-//    @WithUserDetails("username")
+    @WithUserDetails("username")
     void showUserPurse() throws Exception {
-        this.mockMvc.perform(post("/user/purse"))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+        this.mockMvc.perform(get("/user/purse"))
+                .andDo(print()).andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithUserDetails("username")
+    void topUpPurse() throws Exception {
+        this.mockMvc.perform(post("/user/toUpPurse")
+                .param("amount", "10"))
+                .andDo(print()).andExpect(status().is3xxRedirection());
     }
 
 //    @Test

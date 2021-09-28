@@ -18,10 +18,14 @@ public interface OrderService {
 
     Order createAnOrder(OrderDto orderDto);
 
-    void putDishInOrder(DishDto dishDto, AppUserDto appUserDto);
+    void putDishInOrder(String dishName, OrderDto dto);
+
+//    void putDishInOrder(DishDto dishDto, OrderDto dto);
 
     @Transactional
-    Optional<Order> findOrderById(Long id);
+    Order findUserOrder(AppUser user);
 
-    List<Dish> showDishInOrder(OrderDto orderDto);
+    List<DishDto> showDishInOrder(OrderDto orderDto);
+
+    List<OrderDto> showAllOrder();
 }

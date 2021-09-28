@@ -5,12 +5,16 @@ import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
 import epam.project.spring.dto.PurseDto;
 import epam.project.spring.entity.AppUser;
+import epam.project.spring.entity.Order;
 import epam.project.spring.entity.Purse;
 import epam.project.spring.service.order.OrderService;
 import epam.project.spring.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,42 +46,8 @@ public class UserController {
 
     static final Logger logger = LogManager.getLogger();
 
-//    @GetMapping(value = "/purse")
-//    public String getSignPage() {
-//        return PURSE;
-//    }
-
     @RequestMapping(value = "/purse")
-    public String showPurse(HttpServletRequest request, HttpSession session, Model model) {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-//        if (principal instanceof UserDetails) {
-//            String username = ((UserDetails) principal).getUsername();
-//            AppUser user = userService.findUserByLogin(username).get();
-//
-//            Purse purse = null;
-//            purse.setUser(user);
-//            meals.setUser(user);
-//            buildMeals(request, meals);
-//            mealsService.createMeals(meals);
-//            checkCaloriesLimit(user);
-//            logger.info("add meals with id = " + meals.getId());
-//        }
-
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        if (principal instanceof UserDetails) {
-//            Purse purse = userService.createPurse();
-//        }
-//        Purse purse = userService.createPurse();
-//
-////        AppUserDto userDto = (AppUserDto) session.getAttribute(PARAM_USER);
-//
-//        userService.setPurseForUser(userDto);
-//
-//        PurseDto purse = userService.checkPurseAmount(userDto);
-//        model.addAttribute("purse", purse);
-
+    public String showPurse(HttpSession session) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
@@ -94,18 +65,21 @@ public class UserController {
     }
 
 
-    //TODO add ability to top up a purse
     @PostMapping(value = "/topUpPurse")
-    public String topUpPurse(HttpSession session) {
+    public String topUpPurse(@RequestParam(name = "amount") int amount) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
             AppUser user = userService.findUserByLogin(username).get();
 
-            int amount = (int) session.getAttribute(PARAM_AMOUNT);
+            if (amount < 0) {
+                return "redirect:/error";
+            }
 
-            userService.topUpPurse(amount, user.toDto());
+            if (!userService.topUpPurse(amount, user)) {
+                return "redirect:/error";
+            }
 
             logger.info("top up purse on amount = " + amount);
         }
@@ -115,34 +89,47 @@ public class UserController {
 
     //TODO add ability to watch an order
     @RequestMapping(value = "/showOrder")
-    public String showOrder(HttpServletRequest request, HttpSession session, @Valid DishDto dishDto, @Valid OrderDto orderDto) {
+    public String showOrder(HttpServletRequest request, HttpSession session, @Valid OrderDto orderDto, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
             AppUser user = userService.findUserByLogin(username).get();
+            System.out.println(user.toString());
 
             orderDto.setUser(user);
-            orderService.createAnOrder(orderDto);
-            session.setAttribute(PARAM_ORDER, orderDto);
+
+            Order order =  orderService.createAnOrder(orderDto);
+            System.out.println(order.toString());
+
+            List<DishDto> dish = orderService.showDishInOrder(order.toDto());
+
+            model.addAttribute(PARAM_ORDER, order);
+            model.addAttribute(PARAM_DISH, dish);
         }
         return ORDER;
     }
 
     //TODO add ability to put dish into order
-//    @PostMapping(value = "/putInBucket")
-//    public String putInOrder(HttpServletRequest request, @Valid DishDto dishDto, @Valid OrderDto orderDto) {
-//
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            String username = ((UserDetails) principal).getUsername();
-//            AppUser user = userService.findUserByLogin(username).get();
-//            product.setUser(user);
-//            productService.createProduct(product);
-//            logger.info("create product with id = " + product.getId());
-//        }
-//
-//        return MENU_PAGE;
-//    }
+    @PostMapping(value = "/putInBucket")
+    public String putInOrder(HttpServletRequest request, HttpSession session, @Valid DishDto dishDto, Model model, @RequestParam("name") String name) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            AppUser user = userService.findUserByLogin(username).get();
+
+            Order order = orderService.findUserOrder(user);
+
+            System.out.println(order.toString());
+
+            orderService.putDishInOrder(name, order.toDto());
+
+
+            logger.info("user make an order with id = " + user.getId());
+        }
+
+        return MENU_PAGE;
+    }
 //
 //
 //    @PostMapping(value = "/product")

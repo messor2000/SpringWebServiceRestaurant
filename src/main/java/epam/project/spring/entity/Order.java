@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -39,10 +40,10 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder(toBuilder = true)
-@Table(name = "order")
+@Table(name = "user_order")
 public class Order implements Serializable, Cloneable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
@@ -51,6 +52,7 @@ public class Order implements Serializable, Cloneable {
     private Set<OrderStatus> status;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private AppUser user;
 
     @CreationTimestamp

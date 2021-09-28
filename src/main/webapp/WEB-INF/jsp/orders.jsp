@@ -46,10 +46,10 @@
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title"><fmt:message key="locale.orderNumber">Order number</fmt:message>:${order.orderId}</h5>
+                                    <h5 class="card-title"><fmt:message key="locale.orderNumber">Order number</fmt:message>:${order.id}</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><fmt:message key="locale.status">Status</fmt:message>:${order.orderStatus}</li>
-                                        <li class="list-group-item"><fmt:message key="locale.userId">User id</fmt:message>:${order.userId}</li>
+                                        <li class="list-group-item"><fmt:message key="locale.status">Status</fmt:message>:${order.status}</li>
+                                        <li class="list-group-item"><fmt:message key="locale.userId">User id</fmt:message>:${order.user.username}</li>
                                         <c:forEach var="dish" items="${dish}">
                                             <div class="col-sm-6">
                                                 <div class="card">

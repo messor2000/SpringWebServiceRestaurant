@@ -20,6 +20,7 @@ public class Constants {
     public static final String PARAM_ORDER = "order";
     public static final String PARAM_PURSE = "purse";
 
+    public static final String PARAM_DISH = "dish";
     public static final String PARAM_DISH_NAME = "name";
     public static final String PARAM_PRICE = "price";
     public static final String PARAM_CATEGORY = "category";

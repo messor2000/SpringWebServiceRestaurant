@@ -79,6 +79,9 @@ public class SignController {
         authWithAuthManager(request, user.getUsername(), password);
         session.setAttribute(PARAM_USER, user);
 
+        AppUser user2 = userService.findUserByLogin(user.getUsername()).get();
+        System.out.println(user2.getId());
+
         logger.info("create user with username = " + user.getUsername());
         return "redirect:/";
     }

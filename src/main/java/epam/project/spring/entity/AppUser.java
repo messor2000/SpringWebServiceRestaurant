@@ -35,7 +35,7 @@ import java.util.Set;
 @Table(name = "app_user")
 public class AppUser implements Serializable, Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
@@ -54,12 +54,12 @@ public class AppUser implements Serializable, Cloneable {
 //    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private Set<UserRole> roles;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private Purse purse;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//    private Purse purse;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private Set<Order> order;
+//    @OneToMany(cascade=CascadeType.ALL)
+//    @JoinColumn(name = "user_id")
+//    private Set<Order> order;
 
     public AppUser(String username, String password, Set<GrantedAuthority> roles) {
     }
@@ -78,7 +78,7 @@ public class AppUser implements Serializable, Cloneable {
     }
 
     public AppUserDto toDto() {
-        return AppUserDto.of(id, username, null, email, role, purse);
+        return AppUserDto.of(id, username, null, email, role);
     }
 
     @Override

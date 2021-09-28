@@ -34,7 +34,7 @@ class AdminControllerTests {
                 .param("category", "desert")
                 .param("amount", "12"))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test

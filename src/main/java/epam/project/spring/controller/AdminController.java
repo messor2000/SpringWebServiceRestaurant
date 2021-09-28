@@ -1,18 +1,23 @@
 package epam.project.spring.controller;
 
 import epam.project.spring.dto.DishDto;
+import epam.project.spring.dto.OrderDto;
 import epam.project.spring.service.dish.MenuService;
+import epam.project.spring.service.order.OrderService;
 import epam.project.spring.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static epam.project.spring.util.Constants.*;
 import static epam.project.spring.util.Page.*;
@@ -27,6 +32,8 @@ public class AdminController {
     UserService userService;
     @Autowired
     MenuService menuService;
+    @Autowired
+    OrderService orderService;
 
     static final Logger logger = LogManager.getLogger();
 
@@ -61,12 +68,14 @@ public class AdminController {
 
         logger.info("add new dish with name: " + dish.getName());
 
-        return MENU_PAGE;
+        return ADD_DISH;
     }
 
-    //TODO add ability to watch all order
     @GetMapping(value = "/showAllOrders")
-    public String putInOrder() {
+    public String putInOrder(Model model) {
+        List<OrderDto> orderList = orderService.showAllOrder();
+
+        model.addAttribute(PARAM_ORDER, orderList);
         return ORDERS;
     }
 }
