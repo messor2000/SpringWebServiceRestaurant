@@ -1,9 +1,6 @@
 package epam.project.spring.controller;
 
 import epam.project.spring.dto.AppUserDto;
-import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.Purse;
-import epam.project.spring.entity.Role;
 import epam.project.spring.service.user.UserService;
 import epam.project.spring.service.user_role.UserRoleService;
 import org.apache.logging.log4j.LogManager;
@@ -13,8 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
@@ -22,17 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import java.util.Optional;
-
 import static epam.project.spring.util.Constants.PARAM_LOGIN;
 import static epam.project.spring.util.Constants.PARAM_USER;
-import static epam.project.spring.util.Page.*;
+import static epam.project.spring.util.Page.REGISTRATION_PAGE;
 
 /**
  * @author Aleksandr Ovcharenko

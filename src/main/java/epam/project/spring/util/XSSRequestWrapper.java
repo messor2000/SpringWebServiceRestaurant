@@ -1,5 +1,6 @@
 package epam.project.spring.util;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,9 +56,9 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
     private String cleanXSS(String value) {
         logger.info("InnXSS RequestWrapper " + value);
-        value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
-        value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
-        value = value.replaceAll("'", "& #39;");
+        value = value.replace("<", "& lt;").replace(">", "& gt;");
+        value = value.replace("\\(", "& #40;").replace("\\)", "& #41;");
+        value = value.replace("'", "& #39;");
         value = value.replaceAll("eval\\((.*)\\)", "");
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 
@@ -65,8 +66,8 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         value = value.replaceAll("(?i)<script.*?>.*?</script.*?>", "");
         value = value.replaceAll("(?i)<.*?javascript:.*?>.*?</.*?>", "");
         value = value.replaceAll("(?i)<.*?\\s+on.*?>.*?</.*?>", "");
-        value = value.replaceAll("<script>", "");
-        value = value.replaceAll("</script>", "");
+        value = value.replace("<script>", "");
+        value = value.replace("</script>", "");
         logger.info("OutnXSS RequestWrapper value " + value);
         return value;
     }
