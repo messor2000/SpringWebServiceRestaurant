@@ -136,7 +136,7 @@ public class UserController {
             logger.info("user make an order with id = " + user.getId());
         }
 
-        return MENU_PAGE;
+        return ORDER;
     }
 
     //TODO add ability to pay

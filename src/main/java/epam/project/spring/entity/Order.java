@@ -1,5 +1,6 @@
 package epam.project.spring.entity;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import epam.project.spring.dto.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -70,9 +72,9 @@ public class Order implements Serializable, Cloneable {
 //    @JoinTable(name = "dishes_orders",
 //            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)},
 //            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
-    private Set<Dish> dishes = new HashSet<>();
+    private List<Dish> dishes = new ArrayList<>();
 
-    public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, Set<Dish> dishes) {
+    public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, List<Dish> dishes) {
         this.status = status;
         this.user = user;
         this.creationDate = creationDate;

@@ -18,7 +18,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,9 +58,9 @@ public class Dish implements Serializable, Cloneable {
             joinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)})
 //    @ManyToMany(mappedBy = "dishes", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders = new ArrayList<>();
 
-    public Dish(String dishName, int price, String category, int amount, Set<Order> orders) {
+    public Dish(String dishName, int price, String category, int amount, List<Order> orders) {
         this.dishName = dishName;
         this.price = price;
         this.category = category;
