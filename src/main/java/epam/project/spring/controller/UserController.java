@@ -1,10 +1,9 @@
 package epam.project.spring.controller;
 
-import epam.project.spring.dto.AppUserDto;
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
-import epam.project.spring.dto.PurseDto;
 import epam.project.spring.entity.AppUser;
+import epam.project.spring.entity.Dish;
 import epam.project.spring.entity.Order;
 import epam.project.spring.entity.OrderStatus;
 import epam.project.spring.entity.Purse;
@@ -14,24 +13,18 @@ import epam.project.spring.service.order_status.OrderStatusService;
 import epam.project.spring.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static epam.project.spring.util.Constants.*;
@@ -142,6 +135,14 @@ public class UserController {
     //TODO add ability to pay
     @PostMapping(value = "/pay")
     public String pay() {
+
+//        Dish dish = Dish();
+//
+//        dishes.forEach();
+//
+//        Purse userPurse = userService.showUserPurse(user.toDto());
+//        int amount = userPurse.getAmount();
+//        if (order.getDishes().forEach(x -> d);)
         return MENU_PAGE;
     }
 

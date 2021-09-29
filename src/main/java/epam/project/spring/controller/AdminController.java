@@ -8,15 +8,16 @@ import epam.project.spring.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static epam.project.spring.util.Constants.*;
@@ -70,10 +71,15 @@ public class AdminController {
     }
 
     @GetMapping(value = "/showAllOrders")
-    public String putInOrder(Model model) {
-        List<OrderDto> orderList = orderService.showAllOrder();
+    public String putInOrder(HttpServletRequest request, ModelMap modelMap) {
+        List<OrderDto> orderList = (List<OrderDto>) orderService.showAllOrder();
+        PagedListHolder<OrderDto> pagedListHolder = new PagedListHolder<>(orderList);
+        int page = ServletRequestUtils.getIntParameter(request, "p", 0);
 
-        model.addAttribute(PARAM_ORDER, orderList);
+        pagedListHolder.setPage(page);
+        pagedListHolder.setPageSize(3);
+        modelMap.put("pagedListHolder", pagedListHolder);
+
         return ORDERS;
     }
 }

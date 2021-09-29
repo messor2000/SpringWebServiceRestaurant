@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <fmt:setBundle basename="locale" var="locale"/>
 
 
@@ -42,43 +43,45 @@
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
-                    <c:forEach var="order" items="${order}">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title"><fmt:message key="locale.orderNumber">Order number</fmt:message>:${order.id}</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><fmt:message key="locale.status">Status</fmt:message>:${order.status}</li>
-                                        <li class="list-group-item"><fmt:message key="locale.username">User username</fmt:message>:${order.user.username}</li>
-                                        <c:forEach var="dish" items="${dish}">
-                                            <div class="col-sm-6">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title card-Title-Found">${dish.name}</h5>
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item"><fmt:message key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
-                                                            <li class="list-group-item"><fmt:message key="locale.status">Category</fmt:message>:${dish.category}</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                        <jsp:useBean id="pagedListHolder" scope="request"
+                                     type="org.springframework.beans.support.PagedListHolder"/>
+                        <c:url value="/admin/showAllOrders" var="pagedLink">
+                            <c:param name="p" value="~"/>
+                        </c:url>
+
+                        <tg:paging pagedListHolder="${pagedListHolder}"
+                                   pagedLink="${pagedLink}"/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th scope="col" width="20px"><fmt:message
+                                        key="locale.orderNumber">Order number</fmt:message></th>
+                                <th scope="col"><fmt:message key="locale.status">Status</fmt:message></th>
+                                <th scope="col"><fmt:message key="locale.username">User username</fmt:message></th>
+                                <th scope="col"><fmt:message key="locale.approve">Approve</fmt:message></th>
+                            </tr>
+                            <c:forEach items="${pagedListHolder.pageList}" var="item">
+                                <tr>
+                                    <td>${item.id}</td>
+                                    <td>${item.status}</td>
+                                    <td>${item.user.username}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-7">
+                                                <a href="/admin/approveOrder">
+                                                    <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal"><fmt:message
+                                                            key="locale.approve">Approve</fmt:message>
+                                                    </button>
+                                                </a>
                                             </div>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-7">
-                                <a href="admin/approveOrder">
-                                <%--                                <a href="FrontController?command=approve-order&orderId=${order.orderId}">--%>
-                                    <button type="button" class="btn btn-default"
-                                            data-dismiss="modal"><fmt:message key="locale.approve">Approve</fmt:message>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <tg:paging pagedListHolder="${pagedListHolder}"
+                                   pagedLink="${pagedLink}"/>
+                    </div>
             </div>
         </div>
     </div>

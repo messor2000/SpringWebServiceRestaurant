@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,6 +83,15 @@ public class VisitorController {
     @RequestMapping(value = "/menu/desert")
     public String dishesByCategoryDesert(Model model) {
         String category = "Desert";
+        List<DishDto> dish = menuService.showDishesByCategory(category);
+
+        model.addAttribute(PARAM_DISH, dish);
+        return MENU_PAGE;
+    }
+
+    @RequestMapping(value = "/menu/{category}")
+    public String dishesByCategoryFastFood(Model model, @PathVariable String category) {
+//        String category = "Fast food";
         List<DishDto> dish = menuService.showDishesByCategory(category);
 
         model.addAttribute(PARAM_DISH, dish);

@@ -9,7 +9,6 @@ import epam.project.spring.repo.DishRepository;
 import epam.project.spring.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +66,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> showAllOrder() {
+    public Iterable<OrderDto> showAllOrder() {
         final List<OrderDto> userOrders = new ArrayList<>();
-        List<Order> orders = orderRepository.findAll();
+
+        Iterable<Order> orders = orderRepository.findAll();
 
         orders.forEach(x -> userOrders.add(x.toDto()));
 

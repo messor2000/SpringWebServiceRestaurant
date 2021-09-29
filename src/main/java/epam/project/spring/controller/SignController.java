@@ -75,29 +75,6 @@ public class SignController {
         return "redirect:/";
     }
 
-//    @GetMapping(value = "/in")
-//    public String getSignInPage() {
-//        return SIGN_IN_PAGE;
-//    }
-//
-//    @PostMapping(value = "/in")
-//    public String singIn(HttpServletRequest request, HttpSession session, @Valid AppUserDto userDto, Model model) {
-//        Optional<AppUser> user = userService.findUserByLogin(userDto.getUsername());
-//
-//        if (!user.isPresent()) {
-//            model.addAttribute("error_user", true);
-//            model.addAttribute(PARAM_LOGIN, userDto.getUsername());
-//            return "redirect:/error";
-//        }
-//
-//        String password = passwordEncoder.encode(userDto.getPassword());
-//
-//        authWithAuthManager(request, user.get().getUsername(), password);
-//        session.setAttribute(PARAM_USER, user.get());
-//        logger.info("logged user with username = " + userDto.getUsername());
-//        return "redirect:/";
-//    }
-
     public void authWithAuthManager(HttpServletRequest request, String username, String password) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
         authToken.setDetails(new WebAuthenticationDetails(request));

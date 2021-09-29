@@ -27,5 +27,5 @@ public interface OrderService {
     List<DishDto> showDishInUserOrder(AppUser user);
 
     @Transactional
-    List<OrderDto> showAllOrder();
+    Iterable<OrderDto> showAllOrder();
 }
