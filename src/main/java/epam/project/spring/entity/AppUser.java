@@ -61,9 +61,6 @@ public class AppUser implements Serializable, Cloneable {
 //    @JoinColumn(name = "user_id")
 //    private Set<Order> order;
 
-    public AppUser(String username, String password, Set<GrantedAuthority> roles) {
-    }
-
     public static AppUser of(Long id, String login, String password, String role) {
         return AppUser.builder()
                 .id(id)

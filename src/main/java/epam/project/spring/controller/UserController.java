@@ -83,7 +83,7 @@ public class UserController {
             logger.info("top up purse on amount = " + amount);
         }
 
-        return PURSE;
+        return "redirect:"+PURSE;
     }
 
     @Transactional
@@ -116,7 +116,6 @@ public class UserController {
 
     @PostMapping(value = "/putInBucket")
     public String putInOrder(@RequestParam("name") String name) {
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
@@ -129,22 +128,29 @@ public class UserController {
             logger.info("user make an order with id = " + user.getId());
         }
 
-        return ORDER;
+        return "redirect:"+ORDER;
     }
 
     //TODO add ability to pay
     @PostMapping(value = "/pay")
     public String pay() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            AppUser user = userService.findUserByLogin(username).get();
 
-//        Dish dish = Dish();
-//
-//        dishes.forEach();
-//
-//        Purse userPurse = userService.showUserPurse(user.toDto());
-//        int amount = userPurse.getAmount();
-//        if (order.getDishes().forEach(x -> d);)
-        return MENU_PAGE;
+            Purse purse = userService.showUserPurse(user.toDto());
+            int price = orderService.totalOrderPrice(user);
+
+            if (purse.getAmount() < price) {
+                return "redirect:/error";
+            }
+
+            userService.pay()
+
+            logger.info("paid for order with user_id, amount = " + user.getId());
+        }
+
+        return "redirect:"+ORDER;
     }
-
-
 }

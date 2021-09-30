@@ -28,4 +28,11 @@ public interface OrderService {
 
     @Transactional
     Iterable<OrderDto> showAllOrder();
+
+    @Transactional
+    int totalOrderPrice(AppUser user);
+
+    @Transactional
+    @Modifying
+    void pay(O)
 }

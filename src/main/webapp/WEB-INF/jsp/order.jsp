@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:setBundle basename="locale" var="locale"/>
 
 <!DOCTYPE html>
@@ -41,23 +42,34 @@
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="col-sm-6">
+                    <form method="post" path="name" action="${pageContext.request.contextPath}/user/pay"
+                          class="form-horizontal">
                     <c:forEach var="dish" items="${dish}">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><fmt:message key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
-                                        <li class="list-group-item"><fmt:message key="locale.category">Category</fmt:message>:${dish.category}</li>
-                                    </ul>
+                        <c:when test="${fn:length(dish) > 0}">
+                            <h1>Empty order</h1>
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title card-Title-Found">${dish.name}</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><fmt:message key="locale.dishPrice">Price</fmt:message>:${dish.price}</li>
+                                            <li class="list-group-item"><fmt:message key="locale.category">Category</fmt:message>:${dish.category}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h1>Empty order</h1>
+                        </c:otherwise>
                     </c:forEach>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn btn-default"
+                                    data-dismiss="modal"><fmt:message key="locale.pay">Pay</fmt:message>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <a href="${pageContext.request.contextPath}/user/pay">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="locale.pay">Pay</fmt:message></button>
-                </a>
             </div>
         </div>
     </div>

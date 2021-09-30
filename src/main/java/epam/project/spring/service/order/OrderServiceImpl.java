@@ -1,5 +1,6 @@
 package epam.project.spring.service.order;
 
+import epam.project.spring.dto.AppUserDto;
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
 import epam.project.spring.entity.AppUser;
@@ -56,7 +57,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public List<DishDto> showDishInUserOrder(AppUser user) {
-
         final List<DishDto> menu = new ArrayList<>();
         List<Dish> dishes = orderRepository.findDishInUserOrder(user);
 
@@ -74,5 +74,20 @@ public class OrderServiceImpl implements OrderService {
         orders.forEach(x -> userOrders.add(x.toDto()));
 
         return userOrders;
+    }
+
+    @Override
+    @Transactional
+    public int totalOrderPrice(AppUser user) {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = orderRepository.findDishInUserOrder(user);
+
+        int totalPrice = 0;
+
+        for(Dish dish: dishes) {
+            totalPrice += dish.getPrice();
+        }
+
+        return totalPrice;
     }
 }
