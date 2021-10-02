@@ -6,9 +6,10 @@ import epam.project.spring.entity.Purse;
 import epam.project.spring.repo.AppUserRepository;
 import epam.project.spring.repo.PurseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
@@ -62,5 +63,12 @@ public class UserServiceImpl implements UserService {
 
         purseRepository.topUpPurse(amount, user);
         return true;
+    }
+
+    @Override
+    @Modifying
+    @Transactional
+    public void pay(int price, AppUser user) {
+        purseRepository.pay(price, user);
     }
 }

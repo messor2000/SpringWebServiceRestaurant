@@ -1,16 +1,16 @@
 package epam.project.spring.service.order;
 
-import epam.project.spring.dto.AppUserDto;
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
 import epam.project.spring.entity.AppUser;
 import epam.project.spring.entity.Dish;
-import epam.project.spring.entity.Order;
+import epam.project.spring.entity.order.Order;
+import epam.project.spring.entity.order.Status;
 import epam.project.spring.repo.DishRepository;
 import epam.project.spring.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +55,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findUserOrderByStatus(AppUser user, String status) {
+        return orderRepository.getByStatusUserOrder(user, status);
+    }
+
+    @Override
+    public List<Order> getAllByUser(AppUser user) {
+        return orderRepository.getAllByUser(user);
+    }
+
+    @Override
     @Transactional
     public List<DishDto> showDishInUserOrder(AppUser user) {
         final List<DishDto> menu = new ArrayList<>();
@@ -79,7 +89,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public int totalOrderPrice(AppUser user) {
-        final List<DishDto> menu = new ArrayList<>();
         List<Dish> dishes = orderRepository.findDishInUserOrder(user);
 
         int totalPrice = 0;
@@ -89,5 +98,15 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return totalPrice;
+    }
+
+    @Override
+    public void changeOrderStatus(String status, Order order) {
+        orderRepository.changeOrderStatus(status, order);
+    }
+
+    @Override
+    public void approveOrder(Order order) {
+        orderRepository.changeOrderStatus(Status.COMPLETE, order);
     }
 }

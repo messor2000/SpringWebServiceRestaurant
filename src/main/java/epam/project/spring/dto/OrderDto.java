@@ -1,15 +1,12 @@
 package epam.project.spring.dto;
 
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -21,7 +18,7 @@ public class OrderDto implements Serializable {
 
     private Long id;
 
-    private Set<OrderStatus> status;
+    private String status;
 
     private AppUser user;
 
@@ -29,7 +26,7 @@ public class OrderDto implements Serializable {
 
     private Date updateDate;
 
-    public static OrderDto of(Long id, Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate) {
+    public static OrderDto of(Long id, String status, AppUser user, Date creationDate, Date updateDate) {
         return new OrderDto(id, status, user,creationDate, updateDate);
     }
 }

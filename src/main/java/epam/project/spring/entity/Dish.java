@@ -1,6 +1,7 @@
 package epam.project.spring.entity;
 
 import epam.project.spring.dto.DishDto;
+import epam.project.spring.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko

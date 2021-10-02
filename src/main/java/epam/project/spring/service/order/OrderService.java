@@ -3,10 +3,11 @@ package epam.project.spring.service.order;
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.Order;
+import epam.project.spring.entity.order.Order;
+import epam.project.spring.entity.order.Status;
 import org.springframework.data.jpa.repository.Modifying;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
@@ -24,6 +25,12 @@ public interface OrderService {
     Order findUserOrder(AppUser user);
 
     @Transactional
+    Order findUserOrderByStatus(AppUser user, String status);
+
+    @Transactional
+    List<Order> getAllByUser(AppUser user);
+
+    @Transactional
     List<DishDto> showDishInUserOrder(AppUser user);
 
     @Transactional
@@ -32,7 +39,11 @@ public interface OrderService {
     @Transactional
     int totalOrderPrice(AppUser user);
 
-    @Transactional
     @Modifying
-    void pay(O)
+    @Transactional
+    void changeOrderStatus(String status, Order order);
+
+    @Modifying
+    @Transactional
+    void approveOrder(Order order);
 }

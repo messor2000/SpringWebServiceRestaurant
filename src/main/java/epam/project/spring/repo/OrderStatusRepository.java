@@ -1,6 +1,6 @@
 package epam.project.spring.repo;
 
-import epam.project.spring.entity.Order;
+import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

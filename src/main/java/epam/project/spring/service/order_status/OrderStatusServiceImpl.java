@@ -1,6 +1,6 @@
 package epam.project.spring.service.order_status;
 
-import epam.project.spring.entity.Order;
+import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.OrderStatus;
 import epam.project.spring.repo.OrderStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,9 @@
 package epam.project.spring.service.dish;
 
 import epam.project.spring.dto.DishDto;
-import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.Dish;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Aleksandr Ovcharenko

@@ -3,11 +3,10 @@ package epam.project.spring.controller;
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.Dish;
-import epam.project.spring.entity.Order;
+import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.OrderStatus;
 import epam.project.spring.entity.Purse;
-import epam.project.spring.entity.Status;
+import epam.project.spring.entity.order.Status;
 import epam.project.spring.service.order.OrderService;
 import epam.project.spring.service.order_status.OrderStatusService;
 import epam.project.spring.service.user.UserService;
@@ -94,17 +93,19 @@ public class UserController {
             String username = ((UserDetails) principal).getUsername();
             AppUser user = userService.findUserByLogin(username).get();
 
-            OrderStatus status = new OrderStatus();
-            status.setStatus(Status.EMPTY.toString());
+//            OrderStatus status = new OrderStatus();
+//            status.setStatus(Status.EMPTY.toString());
+//
+//            orderDto.setUser(user);
+//            orderDto.setStatus(Status.EMPTY);
+//
+//            Order order = new Order();
+//
+//            if(!orderService.createAnOrder(orderDto, user)) {
+//                order = orderService.findUserOrder(user);
+//            }
 
-            orderDto.setUser(user);
-//            orderDto.getStatus().add(status);
-
-            Order order = new Order();
-
-            if(!orderService.createAnOrder(orderDto, user)) {
-                order = orderService.findUserOrder(user);
-            }
+            Order order = createNewOrder(user);
 
             List<DishDto> dish = orderService.showDishInUserOrder(user);
 
@@ -124,14 +125,14 @@ public class UserController {
             Order order = orderService.findUserOrder(user);
 
             orderService.putDishInOrder(name, order.toDto());
+            orderService.changeOrderStatus("waiting for pay", order);
 
             logger.info("user make an order with id = " + user.getId());
         }
 
-        return "redirect:"+ORDER;
+        return MENU_PAGE;
     }
 
-    //TODO add ability to pay
     @PostMapping(value = "/pay")
     public String pay() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -146,11 +147,31 @@ public class UserController {
                 return "redirect:/error";
             }
 
-            userService.pay()
+            Order order = orderService.findUserOrderByStatus(user, Status.WAITING_FOR_PAY);
+            userService.pay(price, user);
+            orderService.changeOrderStatus(Status.PAYED, order);
+
+            createNewOrder(user);
 
             logger.info("paid for order with user_id, amount = " + user.getId());
         }
 
-        return "redirect:"+ORDER;
+        return MENU_PAGE;
+    }
+
+
+    private Order createNewOrder(AppUser user) {
+        Order order = new Order();
+        OrderStatus status = new OrderStatus();
+        status.setStatus(Status.EMPTY);
+
+        order.setUser(user);
+        order.setStatus("empty");
+
+        if (!orderService.createAnOrder(order.toDto(), user)) {
+            order = orderService.findUserOrder(user);
+        }
+
+        return order;
     }
 }

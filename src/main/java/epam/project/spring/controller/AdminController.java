@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -71,7 +72,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/showAllOrders")
-    public String putInOrder(HttpServletRequest request, ModelMap modelMap) {
+    public String showAllOrders(HttpServletRequest request, ModelMap modelMap) {
         List<OrderDto> orderList = (List<OrderDto>) orderService.showAllOrder();
         PagedListHolder<OrderDto> pagedListHolder = new PagedListHolder<>(orderList);
         int page = ServletRequestUtils.getIntParameter(request, "p", 0);
@@ -82,4 +83,9 @@ public class AdminController {
 
         return ORDERS;
     }
+
+//    @PostMapping
+//    public String approveOrder(@PathVariable) {
+//
+//    }
 }

@@ -1,7 +1,8 @@
-package epam.project.spring.entity;
+package epam.project.spring.entity.order;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import epam.project.spring.dto.OrderDto;
+import epam.project.spring.entity.AppUser;
+import epam.project.spring.entity.Dish;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,20 +19,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -46,16 +42,14 @@ import java.util.Set;
 public class Order implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "order_id")
-    private Set<OrderStatus> status;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private AppUser user;
+
+    @Column(name = "status")
+    private String status;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -74,7 +68,7 @@ public class Order implements Serializable, Cloneable {
 //            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
     private List<Dish> dishes = new ArrayList<>();
 
-    public Order(Set<OrderStatus> status, AppUser user, Date creationDate, Date updateDate, List<Dish> dishes) {
+    public Order(String status, AppUser user, Date creationDate, Date updateDate, List<Dish> dishes) {
         this.status = status;
         this.user = user;
         this.creationDate = creationDate;
@@ -82,7 +76,7 @@ public class Order implements Serializable, Cloneable {
         this.dishes = dishes;
     }
 
-    public static Order of(Long id, AppUser user, Set<OrderStatus> status, Date creationDate, Date updateDate) {
+    public static Order of(Long id, AppUser user, String status, Date creationDate, Date updateDate) {
         return Order.builder()
                 .id(id)
                 .status(status)

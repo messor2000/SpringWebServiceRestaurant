@@ -67,7 +67,7 @@
             <div class="modal-body text-center">
 
                 <form name="loginForm" class="form-horizontal" method="post"
-                      action="<c:url value="/sign/in"/>" onsubmit="return validateForm();">
+                      action="<c:url value="/sign/up"/>" onsubmit="return validateForm();">
                     <span id="usernameDemo" class="red"></span>
                     <div class="form-group">
                         <label for="login" class="col-sm-3 control-label"><fmt:message
