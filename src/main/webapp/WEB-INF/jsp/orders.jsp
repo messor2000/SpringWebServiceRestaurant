@@ -43,45 +43,45 @@
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
-                        <jsp:useBean id="pagedListHolder" scope="request"
-                                     type="org.springframework.beans.support.PagedListHolder"/>
-                        <c:url value="/admin/showAllOrders" var="pagedLink">
-                            <c:param name="p" value="~"/>
-                        </c:url>
+                    <jsp:useBean id="pagedListHolder" scope="request"
+                                 type="org.springframework.beans.support.PagedListHolder"/>
+                    <c:url value="/admin/showAllOrders" var="pagedLink">
+                        <c:param name="p" value="~"/>
+                    </c:url>
 
-                        <tg:paging pagedListHolder="${pagedListHolder}"
-                                   pagedLink="${pagedLink}"/>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th scope="col" width="20px"><fmt:message
-                                        key="locale.orderNumber">Order number</fmt:message></th>
-                                <th scope="col"><fmt:message key="locale.status">Status</fmt:message></th>
-                                <th scope="col"><fmt:message key="locale.username">User username</fmt:message></th>
-                                <th scope="col"><fmt:message key="locale.approve">Approve</fmt:message></th>
-                            </tr>
-                            <c:forEach items="${pagedListHolder.pageList}" var="item">
-                                <tr>
-                                    <td>${item.id}</td>
-                                    <td>${item.status}</td>
-                                    <td>${item.user.username}</td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-3 col-sm-7">
-                                                <a href="/admin/approveOrder">
-                                                    <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal"><fmt:message
-                                                            key="locale.approve">Approve</fmt:message>
-                                                    </button>
-                                                </a>
-                                            </div>
+                    <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
+
+                    <c:forEach items="${pagedListHolder.pageList}" var="order">
+                        <form method="post" path="name" action="${pageContext.request.contextPath}/admin/approveOrder"
+                              class="form-horizontal">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <input type="hidden" name="id" value="${order.id}"
+                                               class="card-title card-Title-Found"><fmt:message
+                                            key="locale.orderNumber">Order number</fmt:message>:${order.id}
+
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><fmt:message
+                                                    key="locale.status">Status</fmt:message>:${order.status}</li>
+                                            <li class="list-group-item"><fmt:message
+                                                    key="locale.username">User username</fmt:message>:${order.user.username}</li>
+                                        </ul>
+                                        <div class="col-sm-7">
+                                            <button type="submit" class="btn btn-default"
+                                                    data-dismiss="modal"><fmt:message
+                                                    key="locale.approve">Approve</fmt:message>
+                                            </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                        <tg:paging pagedListHolder="${pagedListHolder}"
-                                   pagedLink="${pagedLink}"/>
-                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </c:forEach>
+
+
+                    <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
+                </div>
             </div>
         </div>
     </div>
@@ -89,5 +89,4 @@
 <c:import url="template/footer.jsp"/>
 </body>
 </html>
-
 

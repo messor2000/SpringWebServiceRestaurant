@@ -9,10 +9,12 @@ import epam.project.spring.entity.order.Status;
 import epam.project.spring.repo.DishRepository;
 import epam.project.spring.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -106,7 +108,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Modifying
+    @Transactional
     public void approveOrder(Order order) {
         orderRepository.changeOrderStatus(Status.COMPLETE, order);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Order> findOrderById(Long id) {
+        return orderRepository.findById(id);
     }
 }

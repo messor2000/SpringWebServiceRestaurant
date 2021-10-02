@@ -82,28 +82,16 @@ public class UserController {
             logger.info("top up purse on amount = " + amount);
         }
 
-        return "redirect:"+PURSE;
+        return "redirect:" + PURSE;
     }
 
     @Transactional
     @RequestMapping(value = "/showOrder")
-    public String showOrder(@Valid OrderDto orderDto, Model model) {
+    public String showOrder(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
             AppUser user = userService.findUserByLogin(username).get();
-
-//            OrderStatus status = new OrderStatus();
-//            status.setStatus(Status.EMPTY.toString());
-//
-//            orderDto.setUser(user);
-//            orderDto.setStatus(Status.EMPTY);
-//
-//            Order order = new Order();
-//
-//            if(!orderService.createAnOrder(orderDto, user)) {
-//                order = orderService.findUserOrder(user);
-//            }
 
             Order order = createNewOrder(user);
 
@@ -134,7 +122,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/pay")
-    public String pay() {
+    public String pay(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
@@ -148,15 +136,24 @@ public class UserController {
             }
 
             Order order = orderService.findUserOrderByStatus(user, Status.WAITING_FOR_PAY);
+
+            if (order.getStatus().equals(Status.PAYED)) {
+                return "redirect:/error";
+            }
+
             userService.pay(price, user);
             orderService.changeOrderStatus(Status.PAYED, order);
 
-            createNewOrder(user);
+            order = createNewOrder(user);
 
             logger.info("paid for order with user_id, amount = " + user.getId());
-        }
 
-        return MENU_PAGE;
+            List<DishDto> dish = orderService.showDishInUserOrder(user);
+
+            model.addAttribute(PARAM_ORDER, order);
+            model.addAttribute(PARAM_DISH, dish);
+        }
+        return ORDER;
     }
 
 

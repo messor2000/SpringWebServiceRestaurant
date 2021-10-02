@@ -2,6 +2,8 @@ package epam.project.spring.controller;
 
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.dto.OrderDto;
+import epam.project.spring.entity.order.Order;
+import epam.project.spring.entity.order.Status;
 import epam.project.spring.service.dish.MenuService;
 import epam.project.spring.service.order.OrderService;
 import epam.project.spring.service.user.UserService;
@@ -10,12 +12,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -73,19 +77,41 @@ public class AdminController {
 
     @GetMapping(value = "/showAllOrders")
     public String showAllOrders(HttpServletRequest request, ModelMap modelMap) {
+//        List<OrderDto> orderList = (List<OrderDto>) orderService.showAllOrder();
+//        PagedListHolder<OrderDto> pagedListHolder = new PagedListHolder<>(orderList);
+//        int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+//
+//        pagedListHolder.setPage(page);
+//        pagedListHolder.setPageSize(3);
+//        modelMap.put("pagedListHolder", pagedListHolder);
+//
+//        return ORDERS;
+        return getAllOrder(request, modelMap);
+    }
+
+    @PostMapping(value = "/approveOrder")
+    public String approveOrder(@RequestParam("id") Long id, HttpServletRequest request, ModelMap modelMap) {
+        Order order = orderService.findOrderById(id).get();
+
+        System.out.println(order.toString());
+
+        if (!order.getStatus().equals(Status.PAYED)) {
+            return "redirect:/error";
+        }
+        orderService.approveOrder(order);
+
+        return getAllOrder(request, modelMap);
+    }
+
+    private String getAllOrder(HttpServletRequest request, ModelMap modelMap) {
         List<OrderDto> orderList = (List<OrderDto>) orderService.showAllOrder();
         PagedListHolder<OrderDto> pagedListHolder = new PagedListHolder<>(orderList);
         int page = ServletRequestUtils.getIntParameter(request, "p", 0);
 
         pagedListHolder.setPage(page);
-        pagedListHolder.setPageSize(3);
+        pagedListHolder.setPageSize(4);
         modelMap.put("pagedListHolder", pagedListHolder);
 
         return ORDERS;
     }
-
-//    @PostMapping
-//    public String approveOrder(@PathVariable) {
-//
-//    }
 }
