@@ -1,11 +1,10 @@
 package epam.project.spring.controller;
 
 import epam.project.spring.dto.DishDto;
-import epam.project.spring.dto.OrderDto;
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.OrderStatus;
 import epam.project.spring.entity.Purse;
+import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.order.Status;
 import epam.project.spring.service.order.OrderService;
 import epam.project.spring.service.order_status.OrderStatusService;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.List;
 
 import static epam.project.spring.util.Constants.*;
@@ -122,7 +120,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/pay")
-    public String pay(Model model) {
+    public String pay() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
@@ -144,9 +142,23 @@ public class UserController {
             userService.pay(price, user);
             orderService.changeOrderStatus(Status.PAYED, order);
 
-            order = createNewOrder(user);
-
             logger.info("paid for order with user_id, amount = " + user.getId());
+        }
+        return ORDER;
+    }
+
+    @PostMapping(value = "/newOrder")
+    public String createNewOrder(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            AppUser user = userService.findUserByLogin(username).get();
+
+            Order order = orderService.findUserOrderByStatus(user, Status.WAITING_FOR_PAY);
+
+            if (order == null) {
+                order = createNewOrder(user);
+            }
 
             List<DishDto> dish = orderService.showDishInUserOrder(user);
 
@@ -155,7 +167,6 @@ public class UserController {
         }
         return ORDER;
     }
-
 
     private Order createNewOrder(AppUser user) {
         Order order = new Order();

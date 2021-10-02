@@ -45,7 +45,6 @@
                     <form method="post" path="name" action="${pageContext.request.contextPath}/user/pay"
                           class="form-horizontal">
                     <c:forEach var="dish" items="${dish}">
-<%--                        <c:when test="${fn:length(dish) > 0}">--%>
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -57,10 +56,6 @@
                                     </div>
                                 </div>
                             </div>
-<%--                        </c:when>--%>
-<%--                        <c:otherwise>--%>
-<%--                            <h1>Empty order</h1>--%>
-<%--                        </c:otherwise>--%>
                     </c:forEach>
                         <div class="col-sm-7">
                             <button type="submit" class="btn btn-default"
@@ -68,6 +63,14 @@
                             </button>
                         </div>
                     </form>
+<%--                    <form method="post" path="name" action="${pageContext.request.contextPath}/user/newOrder"--%>
+<%--                          class="form-horizontal">--%>
+<%--                        <div class="col-sm-7">--%>
+<%--                            <button type="submit" class="btn btn-default"--%>
+<%--                                    data-dismiss="modal"><fmt:message key="locale.newOrder">New Order</fmt:message>--%>
+<%--                            </button>--%>
+<%--                        </div>--%>
+<%--                    </form>--%>
                 </div>
             </div>
         </div>

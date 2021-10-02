@@ -6,22 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -50,16 +42,6 @@ public class AppUser implements Serializable, Cloneable {
 
     @Column(name = "user_role")
     private String role;
-
-//    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Set<UserRole> roles;
-
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-//    private Purse purse;
-
-//    @OneToMany(cascade=CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-//    private Set<Order> order;
 
     public static AppUser of(Long id, String login, String password, String role) {
         return AppUser.builder()

@@ -32,6 +32,9 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     @Query("select d from Dish d join d.orders o where o.user= :user")
     List<Dish> findDishInUserOrder(@Param("user") AppUser user);
 
+    @Query("select d from Dish d join d.orders o where o.id= :id")
+    List<Dish> findDishInOrder(@Param("id") Order order);
+
     @Modifying
     @Query(value = "update user_order o set o.status=:status where o.id = :id", nativeQuery = true)
     void changeOrderStatus(@Param("status") String status, @Param("id") Order order);

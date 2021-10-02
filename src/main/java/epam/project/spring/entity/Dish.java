@@ -50,13 +50,10 @@ public class Dish implements Serializable, Cloneable {
     @Column(name = "amount")
     private int amount;
 
-//    @ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
-
-        @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "dishes_orders",
             joinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)})
-//    @ManyToMany(mappedBy = "dishes", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Order> orders = new ArrayList<>();
 
     public Dish(String dishName, int price, String category, int amount, List<Order> orders) {

@@ -1,8 +1,5 @@
 package epam.project.spring.dto;
 
-import epam.project.spring.entity.Purse;
-import epam.project.spring.entity.Role;
-import epam.project.spring.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +8,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko

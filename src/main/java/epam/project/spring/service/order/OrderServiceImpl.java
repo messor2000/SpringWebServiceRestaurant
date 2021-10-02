@@ -112,11 +112,22 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void approveOrder(Order order) {
         orderRepository.changeOrderStatus(Status.COMPLETE, order);
+
+        orderRepository.delete(order);
     }
 
     @Override
     @Transactional
     public Optional<Order> findOrderById(Long id) {
         return orderRepository.findById(id);
+    }
+
+    @Override
+    public List<DishDto> showDishInOrder(Order order) {
+        final List<DishDto> menu = new ArrayList<>();
+        List<Dish> dishes = orderRepository.findDishInOrder(order);
+
+        dishes.forEach(x -> menu.add(x.toDto()));
+        return menu;
     }
 }

@@ -49,4 +49,8 @@ public interface OrderService {
 
     @Transactional
     Optional<Order> findOrderById(Long id);
+
+    @Transactional
+    List<DishDto> showDishInOrder(Order order);
+
 }

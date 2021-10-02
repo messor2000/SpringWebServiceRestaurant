@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,11 +62,7 @@ public class Order implements Serializable, Cloneable {
     @Column(name = "update_date")
     private Date updateDate;
 
-        @ManyToMany(fetch = FetchType.EAGER,mappedBy = "orders")
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "dishes_orders",
-//            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)},
-//            inverseJoinColumns = {@JoinColumn(name = "dish_name", referencedColumnName = "dish_name", nullable = false, updatable = false)})
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Dish> dishes = new ArrayList<>();
 
     public Order(String status, AppUser user, Date creationDate, Date updateDate, List<Dish> dishes) {
