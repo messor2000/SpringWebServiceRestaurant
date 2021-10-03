@@ -64,7 +64,9 @@ class VisitorControllerTests {
 
     @Test
     void shouldReturnMenuByCategoryDesert() throws Exception {
-        this.mockMvc.perform(get("/menu/desert")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/user/order"))
+                .andDo(print())
+                .andExpect(authenticated());
     }
 
     @Test
@@ -74,3 +76,4 @@ class VisitorControllerTests {
                 .andExpect(authenticated());
     }
 }
+

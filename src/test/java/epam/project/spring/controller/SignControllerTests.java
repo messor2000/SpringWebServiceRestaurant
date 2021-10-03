@@ -25,9 +25,6 @@ public class SignControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Test
     public void securityTest() throws Exception {
         this.mockMvc.perform(get("/user/purse"))
@@ -48,18 +45,9 @@ public class SignControllerTests {
     @Test
     public void successLoginTest() throws Exception {
         this.mockMvc.perform(post("/sign/in")
-                .param("username", "testUser")
-                .param("password", "qwe12345"))
+                .param("username", "newUser")
+                .param("password", "password"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/menu"));
+                .andExpect(status().is3xxRedirection());
     }
-
-//    @Test
-//    public void validateUserTest() throws Exception {
-//        this.mockMvc.perform(post("/sign/up")
-//                .param("login", "yulka-pulka")
-//                .param("password", "1234"))
-//                .andDo(print()).andExpect(status().is4xxClientError());
-//    }
 }

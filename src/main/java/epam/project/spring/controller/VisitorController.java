@@ -88,14 +88,4 @@ public class VisitorController {
         model.addAttribute(PARAM_DISH, dish);
         return MENU_PAGE;
     }
-
-    @RequestMapping(value = "/menu/{category}")
-    public String dishesByCategoryFastFood(Model model, @PathVariable String category) {
-//        String category = "Fast food";
-        List<DishDto> dish = menuService.showDishesByCategory(category);
-
-        model.addAttribute(PARAM_DISH, dish);
-        return MENU_PAGE;
-    }
-
 }

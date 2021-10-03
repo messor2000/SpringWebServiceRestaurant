@@ -64,7 +64,7 @@ public class AdminController {
         dish.setAmount(amount);
 
         if (!menuService.addDish(dish)) {
-            return "redirect:/error";
+            return REDIRECT_ERROR_PAGE;
         }
 
         logger.info("add new dish with name: " + dish.getName());
@@ -82,7 +82,7 @@ public class AdminController {
         Order order = orderService.findOrderById(id).get();
 
         if (!order.getStatus().equals(Status.PAYED)) {
-            return "redirect:/error";
+            return REDIRECT_ERROR_PAGE;
         }
         orderService.approveOrder(order);
 

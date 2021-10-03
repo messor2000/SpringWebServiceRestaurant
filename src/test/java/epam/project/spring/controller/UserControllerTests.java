@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-//@WithUserDetails("manager")
 @TestPropertySource("/application-test.properties")
 class UserControllerTests {
     @Autowired
@@ -44,26 +43,52 @@ class UserControllerTests {
     }
 
     @Test
-    @WithUserDetails("username")
-    void validPurseAmountTest() throws Exception {
-        this.mockMvc.perform(post("/user/topUpPurse")
-                .param("amount", "-10"))
-                .andDo(print()).andExpect(status().is4xxClientError());
-    }
-
-    @Test
-    @WithUserDetails("username")
-    void showUserPurse() throws Exception {
+    @WithUserDetails("testtest")
+    void showUserPurseTest() throws Exception {
         this.mockMvc.perform(get("/user/purse"))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    @WithUserDetails("username")
-    void topUpPurse() throws Exception {
+    @WithUserDetails("testtest")
+    void showOrderTest() throws Exception {
+        this.mockMvc.perform(get("/user/showOrder"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    @WithUserDetails("testtest")
+    void putInOrderTest() throws Exception {
+        this.mockMvc.perform(post("/user/putInBucket")
+                .param("name", "Pizza"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Test
+    @WithUserDetails("testtest")
+    void payWithoutMoneyTest() throws Exception {
+        this.mockMvc.perform(post("/user/pay"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @WithUserDetails("testtest")
+    void topUpPurseTest() throws Exception {
         this.mockMvc.perform(post("/user/toUpPurse")
-                .param("amount", "10"))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+                .param("amount", "100"))
+                .andDo(print()).andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithUserDetails("testtest")
+    void payTest() throws Exception {
+        this.mockMvc.perform(post("/user/pay"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
     }
 
 

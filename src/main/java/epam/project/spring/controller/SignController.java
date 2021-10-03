@@ -2,7 +2,6 @@ package epam.project.spring.controller;
 
 import epam.project.spring.dto.AppUserDto;
 import epam.project.spring.service.user.UserService;
-import epam.project.spring.service.user_role.UserRoleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import javax.validation.Valid;
 
 import static epam.project.spring.util.Constants.PARAM_LOGIN;
 import static epam.project.spring.util.Constants.PARAM_USER;
+import static epam.project.spring.util.Page.REDIRECT_ERROR_PAGE;
 import static epam.project.spring.util.Page.REGISTRATION_PAGE;
 
 /**
@@ -34,9 +34,6 @@ import static epam.project.spring.util.Page.REGISTRATION_PAGE;
 public class SignController {
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserRoleService userRoleService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -53,9 +50,6 @@ public class SignController {
 
     @PostMapping(value = "/up")
     public String signUp(HttpServletRequest request, HttpSession session, @Valid AppUserDto user, Model model) {
-
-//        user.setRole(Role.USER);
-
         user.setRole("ADMIN");
 
         String password = user.getPassword();
@@ -65,7 +59,7 @@ public class SignController {
         if (!userService.createUser(user)) {
             model.addAttribute("error_user", true);
             model.addAttribute(PARAM_LOGIN, user.getUsername());
-            return "redirect:/error";
+            return REDIRECT_ERROR_PAGE;
         }
 
         authWithAuthManager(request, user.getUsername(), password);

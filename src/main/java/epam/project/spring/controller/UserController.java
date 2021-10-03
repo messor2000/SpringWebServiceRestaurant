@@ -2,12 +2,10 @@ package epam.project.spring.controller;
 
 import epam.project.spring.dto.DishDto;
 import epam.project.spring.entity.AppUser;
-import epam.project.spring.entity.OrderStatus;
 import epam.project.spring.entity.Purse;
 import epam.project.spring.entity.order.Order;
 import epam.project.spring.entity.order.Status;
 import epam.project.spring.service.order.OrderService;
-import epam.project.spring.service.order_status.OrderStatusService;
 import epam.project.spring.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,9 +35,6 @@ public class UserController {
     UserService userService;
     @Autowired
     OrderService orderService;
-    @Autowired
-    OrderStatusService orderStatusService;
-
 
     static final Logger logger = LogManager.getLogger();
 
@@ -70,11 +65,11 @@ public class UserController {
             AppUser user = userService.findUserByLogin(username).get();
 
             if (amount < 0) {
-                return "redirect:/error";
+                return REDIRECT_ERROR_PAGE;
             }
 
             if (!userService.topUpPurse(amount, user)) {
-                return "redirect:/error";
+                return REDIRECT_ERROR_PAGE;
             }
 
             logger.info("top up purse on amount = " + amount);
@@ -130,13 +125,13 @@ public class UserController {
             int price = orderService.totalOrderPrice(user);
 
             if (purse.getAmount() < price) {
-                return "redirect:/error";
+                return REDIRECT_ERROR_PAGE;
             }
 
             Order order = orderService.findUserOrderByStatus(user, Status.WAITING_FOR_PAY);
 
             if (order.getStatus().equals(Status.PAYED)) {
-                return "redirect:/error";
+                return REDIRECT_ERROR_PAGE;
             }
 
             userService.pay(price, user);
@@ -170,8 +165,6 @@ public class UserController {
 
     private Order createNewOrder(AppUser user) {
         Order order = new Order();
-        OrderStatus status = new OrderStatus();
-        status.setStatus(Status.EMPTY);
 
         order.setUser(user);
         order.setStatus("empty");

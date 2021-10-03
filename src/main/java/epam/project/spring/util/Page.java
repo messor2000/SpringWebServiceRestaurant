@@ -5,6 +5,7 @@ package epam.project.spring.util;
  */
 public class Page {
     public static final String INDEX_PAGE = "index";
+    public static final String REDIRECT_ERROR_PAGE = "redirect:/error";
     public static final String MENU_PAGE = "menu";
     public static final String REGISTRATION_PAGE = "register";
     public static final String SIGN_IN_PAGE = "login";

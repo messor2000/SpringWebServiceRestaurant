@@ -1,7 +1,6 @@
 package epam.project.spring.service.purse;
 
 import epam.project.spring.entity.Purse;
-import epam.project.spring.entity.UserRole;
 
 import java.util.Optional;
 

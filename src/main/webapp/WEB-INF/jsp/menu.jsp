@@ -78,11 +78,11 @@
                     <label>
                         <select class="sortStat" name="y" onchange="MakeSort(this);">
                             <option value="/menu"><fmt:message key="locale.allMenu">All menu</fmt:message></option>
-                            <option value="/menu/{fastFood}"><fmt:message
+                            <option value="/menu/fastFood"><fmt:message
                                     key="locale.fastFood">Fast food</fmt:message></option>
-                            <option value="/menu/{healthyFood}"><fmt:message
+                            <option value="/menu/healthyFood"><fmt:message
                                     key="locale.healthyFood">Healthy food</fmt:message></option>
-                            <option value="/menu/{desert}"><fmt:message
+                            <option value="/menu/desert"><fmt:message
                                     key="locale.desert">Desert</fmt:message></option>
                         </select>
                     </label>

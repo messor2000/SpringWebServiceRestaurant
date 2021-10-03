@@ -10,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithUserDetails("manager")
+@WithUserDetails("username")
 @TestPropertySource("/application-test.properties")
 class AdminControllerTests {
     @Autowired
@@ -34,7 +35,7 @@ class AdminControllerTests {
                 .param("category", "desert")
                 .param("amount", "12"))
                 .andDo(print())
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -44,6 +45,27 @@ class AdminControllerTests {
                 .param("price", "12")
                 .param("category", "desert")
                 .param("amount", "12"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void showAllOrdersTest() throws Exception {
+        this.mockMvc.perform(get("/admin/showAllOrders"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void approveOrderTest() throws Exception {
+        this.mockMvc.perform(get("/admin/approveOrder").param("id", "45"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void validateApproveOrderTest() throws Exception {
+        this.mockMvc.perform(get("/admin/approveOrder").param("id", "3"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
