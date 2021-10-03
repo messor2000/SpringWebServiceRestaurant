@@ -1,9 +1,9 @@
 database_mysql:
-  image: mysql:5.7.23
+  image: mysql:8.0.26
   environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=final_task_restaturant_spring
   ports:
     - 3308:3306
-  container_name: MySQLContainer
+  container_name: /MySQLContainer
   command: mysqld --sql-mode=""
